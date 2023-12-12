@@ -2,7 +2,7 @@ import { postReceipt } from "./action";
 
 export default async function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-slate-900 text-slate-100">
+    <main className="flex min-h-screen flex-col items-center justify-center  ">
       <form
         action={postReceipt}
         className="flex flex-col items-center justify-center gap-2"

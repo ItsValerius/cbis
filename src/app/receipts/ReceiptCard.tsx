@@ -1,6 +1,15 @@
-import Link from "next/link";
 import React from "react";
-import { ReceiptWithItems } from "~/server/db/schema";
+import type { ReceiptWithItems } from "~/server/db/schema";
+
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+
+import ReceiptItemsAccordion from "./ReceiptItemsAccordion";
 
 const ReceiptCard = ({
   receipt,
@@ -10,9 +19,11 @@ const ReceiptCard = ({
   children?: React.JSX.Element;
 }) => {
   return (
-    <div className="flex h-full flex-col gap-y-4 rounded border border-slate-500 bg-slate-800 p-4 shadow-md shadow-slate-700">
-      {children}
-      <div>
+    <Card className="flex w-[480px] max-w-full flex-col gap-y-4 transition-shadow duration-500 hover:shadow-xl">
+      <CardHeader>
+        <CardTitle>Receipt ID: {receipt.id}</CardTitle>
+      </CardHeader>
+      <CardContent>
         <div className="flex justify-between gap-2">
           <p>Merchant Name:</p>
           <p className=" text-right">{receipt.merchantName ?? "-"}</p>
@@ -29,27 +40,12 @@ const ReceiptCard = ({
           <p>Receipt Total:</p>
           <p className=" ">{receipt.total ?? "-"}€</p>
         </div>
-      </div>
-      <table>
-        <caption className="font-medium underline">Receipt Items </caption>
-        <thead>
-          <tr>
-            <th className="text-left">Name</th>
-            <th className="text-right">Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {receipt?.receiptItems.map((receiptItem) => {
-            return (
-              <tr key={receiptItem.id} className="border-b border-yellow-100">
-                <td className="">{receiptItem.name}</td>
-                <td className="text-right">{receiptItem.price}€</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+      </CardContent>
+      <CardFooter>
+        <ReceiptItemsAccordion receiptItems={receipt.receiptItems} />
+      </CardFooter>
+      <CardFooter>{children}</CardFooter>
+    </Card>
   );
 };
 
