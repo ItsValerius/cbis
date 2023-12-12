@@ -25,7 +25,7 @@ export async function POST(req: Request) {
         merchantAdress: fields.merchantAddress?.value,
         merchantPhone: fields.merchantPhoneNumber?.value,
         merchantName: fields.merchantName?.value,
-        total: fields.total?.value,
+        total: fields.total?.value.replace(/\D/g, ""), //Remove all strings that might be here
       })
       .returning();
     const receiptsItemsReq = items.map((item) => {
