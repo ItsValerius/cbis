@@ -15,7 +15,7 @@ import {
 export default async function Page() {
   return (
     <main className=" flex min-h-screen  flex-col items-center justify-center gap-2 p-4">
-      <Card className="flex flex-col items-center gap-2">
+      <Card className="flex flex-col items-center gap-2 shadow-xl">
         <CardHeader>
           <CardTitle>Upload a Receipt</CardTitle>
           <CardDescription>Analyze your receipt in the cloud.</CardDescription>
@@ -26,7 +26,12 @@ export default async function Page() {
             className="flex flex-col items-center gap-2"
           >
             <Label htmlFor="file_input">Upload Receipt</Label>
-            <Input id="file_input" type="file" name="receipt" />
+            <Input
+              id="file_input"
+              type="file"
+              name="receipt"
+              className="file:border-muted  file:border-r   file:hover:cursor-pointer"
+            />
             <Button type="submit">Submit</Button>
           </form>
         </CardContent>
