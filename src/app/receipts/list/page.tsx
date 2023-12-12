@@ -1,5 +1,4 @@
 import { getReceipts } from "~/lib/helper";
-
 export default async function Page() {
   const receipts = await getReceipts();
   return (

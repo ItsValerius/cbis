@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { receiptItems, receipts } from "~/server/db/schema";
@@ -37,6 +38,6 @@ export async function POST(req: Request) {
     });
     await ctx.insert(receiptItems).values(receiptsItemsReq);
   });
-
+  revalidatePath("/receipts/list");
   return new Response();
 }
