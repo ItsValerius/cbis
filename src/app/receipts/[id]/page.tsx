@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 import { getReceipt } from "~/lib/helper";
-import ReceiptCard from "../_components/ReceiptCard";
+import ReceiptCard from "../../../components/receipts/ReceiptCard";
 import { Button } from "~/components/ui/button";
 
 const Page = async ({ params }: { params: { id: number } }) => {

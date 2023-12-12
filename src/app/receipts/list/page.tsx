@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getReceipts } from "~/lib/helper";
-import ReceiptCard from "../_components/ReceiptCard";
+import ReceiptCard from "../../../components/receipts/ReceiptCard";
 import { Button } from "~/components/ui/button";
 export default async function Page() {
   const receipts = await getReceipts();
