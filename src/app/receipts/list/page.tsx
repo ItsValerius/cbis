@@ -1,11 +1,13 @@
+import Link from "next/link";
 import { getReceipts } from "~/lib/helper";
 export default async function Page() {
   const receipts = await getReceipts();
   return (
-    <main className="grid min-h-screen grid-cols-3 grid-rows-3 gap-4 bg-slate-900 p-4 text-slate-100 ">
+    <main className="mx-auto grid min-h-screen max-w-5xl grid-cols-3  gap-4 bg-slate-900 p-4 text-slate-100 ">
       {receipts.map((receipt) => {
         return (
-          <div
+          <Link
+            href={`/receipt/${receipt.id}`}
             key={receipt.id}
             className="flex flex-col  gap-y-4 rounded border border-slate-500 bg-slate-800 p-4 shadow-md shadow-slate-700"
           >
@@ -49,7 +51,7 @@ export default async function Page() {
                 })}
               </tbody>
             </table>
-          </div>
+          </Link>
         );
       })}
     </main>
