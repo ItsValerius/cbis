@@ -19,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="">
-      <body className={`font-sans ${inter.variable} `}>{children}</body>
+    <html lang="en">
+      <body className={`font-sans ${inter.variable} bg-main-pattern bg-repeat`}>
+        {children}
+      </body>
     </html>
   );
 }
