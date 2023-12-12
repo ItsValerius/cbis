@@ -1,15 +1,8 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { relations, sql } from "drizzle-orm";
-import {
-  bigint,
-  float,
-  index,
-  mysqlSchema,
-  mysqlTableCreator,
-  timestamp,
-} from "drizzle-orm/mysql-core";
+import { relations } from "drizzle-orm";
+
 import {
   pgTableCreator,
   serial,

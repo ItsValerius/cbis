@@ -1,6 +1,6 @@
 import { env } from "~/env";
 import * as schema from "./schema";
-import { Pool, neon, neonConfig } from "@neondatabase/serverless";
+import { Pool, neonConfig } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-serverless";
 
 import ws from "ws";

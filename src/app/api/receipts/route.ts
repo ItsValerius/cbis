@@ -3,8 +3,7 @@ import { db } from "~/server/db";
 import { receiptItems, receipts } from "~/server/db/schema";
 import { schema } from "~/server/schema/APIResponseSchema";
 export async function POST(req: Request) {
-  const reqJson = await req.json();
-  const parsedRequest = schema.safeParse(reqJson);
+  const parsedRequest = schema.safeParse(await req.json());
   if (!parsedRequest.success) {
     const { errors } = parsedRequest.error;
 
@@ -20,7 +19,7 @@ export async function POST(req: Request) {
   const items =
     parsedRequest.data.body.responsev2.predictionOutput.result.items;
   await db.transaction(async (ctx) => {
-    const receiptsReturn = await db
+    const receiptsReturn = await ctx
       .insert(receipts)
       .values({
         merchantAdress: fields.merchantAddress.value,
@@ -36,7 +35,7 @@ export async function POST(req: Request) {
         receiptId: receiptsReturn.at(0)?.id,
       };
     });
-    await db.insert(receiptItems).values(receiptsItemsReq);
+    await ctx.insert(receiptItems).values(receiptsItemsReq);
   });
 
   return new Response();

@@ -1,6 +1,5 @@
-import { db } from "~/server/db"
-import { receiptItems } from "~/server/db/schema"
+import { db } from "~/server/db";
 
 export const getReceipts = async () => {
-    return await db.query.receipts.findMany({ with: { receiptItems: true } })
-}
+  return await db.query.receipts.findMany({ with: { receiptItems: true } });
+};
