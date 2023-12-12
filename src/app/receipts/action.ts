@@ -1,5 +1,6 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { env } from "~/env";
 
 export async function postReceipt(formData: FormData) {
@@ -8,4 +9,5 @@ export async function postReceipt(formData: FormData) {
   console.log(formData);
 
   await fetch(env.RECEIPT_PROCESSOR_URL, { method: "POST", body: formData });
+  return redirect("/receipts/list");
 }
