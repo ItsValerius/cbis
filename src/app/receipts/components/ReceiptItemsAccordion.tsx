@@ -35,7 +35,7 @@ const ReceiptItemsAccordion = ({
       <AccordionItem value="item-1">
         <AccordionTrigger>Receipt Items</AccordionTrigger>
         <AccordionContent>
-          <Table className="w-full">
+          <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="text-left">Name</TableHead>
