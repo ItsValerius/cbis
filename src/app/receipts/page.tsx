@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/card";
 export default async function Page() {
   return (
-    <main className=" flex min-h-screen  flex-col items-center justify-center gap-8 p-4">
+    <main className=" flex min-h-screen flex-col items-center justify-center gap-8 p-4">
       <h1 className="scroll-m-20 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent lg:text-5xl">
         BillSplit
       </h1>
@@ -33,7 +33,7 @@ export default async function Page() {
               id="file_input"
               type="file"
               name="receipt"
-              className="file:border-muted  file:border-r   file:hover:cursor-pointer"
+              className="file:border-muted file:border-r file:hover:cursor-pointer"
             />
             <Button type="submit">Submit</Button>
           </form>
