@@ -98,114 +98,122 @@ export const schema = z.object({
           ),
           fields: z.object({
             "@odata.type": z.string(),
-            merchantAddress: z.object({
-              "@odata.type": z.string(),
-              value: z.string(),
-              confidence: z.number(),
-              location: z.object({
+            merchantAddress: z
+              .object({
                 "@odata.type": z.string(),
-                page: z.number(),
-                boundingBox: z.object({
+                value: z.string(),
+                confidence: z.number(),
+                location: z.object({
                   "@odata.type": z.string(),
-                  left: z.number(),
-                  top: z.number(),
-                  width: z.number(),
-                  height: z.number(),
-                  polygon: z.object({
+                  page: z.number(),
+                  boundingBox: z.object({
                     "@odata.type": z.string(),
-                    "coordinates@odata.type": z.string(),
-                    coordinates: z.array(
-                      z.object({
-                        "@odata.type": z.string(),
-                        x: z.number(),
-                        y: z.number(),
-                      }),
-                    ),
+                    left: z.number(),
+                    top: z.number(),
+                    width: z.number(),
+                    height: z.number(),
+                    polygon: z.object({
+                      "@odata.type": z.string(),
+                      "coordinates@odata.type": z.string(),
+                      coordinates: z.array(
+                        z.object({
+                          "@odata.type": z.string(),
+                          x: z.number(),
+                          y: z.number(),
+                        }),
+                      ),
+                    }),
                   }),
                 }),
-              }),
-            }),
-            merchantPhoneNumber: z.object({
-              "@odata.type": z.string(),
-              value: z.string(),
-              confidence: z.number(),
-              location: z.object({
+              })
+              .optional(),
+            merchantPhoneNumber: z
+              .object({
                 "@odata.type": z.string(),
-                page: z.number(),
-                boundingBox: z.object({
+                value: z.string(),
+                confidence: z.number(),
+                location: z.object({
                   "@odata.type": z.string(),
-                  left: z.number(),
-                  top: z.number(),
-                  width: z.number(),
-                  height: z.number(),
-                  polygon: z.object({
+                  page: z.number(),
+                  boundingBox: z.object({
                     "@odata.type": z.string(),
-                    "coordinates@odata.type": z.string(),
-                    coordinates: z.array(
-                      z.object({
-                        "@odata.type": z.string(),
-                        x: z.number(),
-                        y: z.number(),
-                      }),
-                    ),
+                    left: z.number(),
+                    top: z.number(),
+                    width: z.number(),
+                    height: z.number(),
+                    polygon: z.object({
+                      "@odata.type": z.string(),
+                      "coordinates@odata.type": z.string(),
+                      coordinates: z.array(
+                        z.object({
+                          "@odata.type": z.string(),
+                          x: z.number(),
+                          y: z.number(),
+                        }),
+                      ),
+                    }),
                   }),
                 }),
-              }),
-            }),
-            total: z.object({
-              "@odata.type": z.string(),
-              value: z.string(),
-              confidence: z.number(),
-              location: z.object({
+              })
+              .optional(),
+            total: z
+              .object({
                 "@odata.type": z.string(),
-                page: z.number(),
-                boundingBox: z.object({
+                value: z.string(),
+                confidence: z.number(),
+                location: z.object({
                   "@odata.type": z.string(),
-                  left: z.number(),
-                  top: z.number(),
-                  width: z.number(),
-                  height: z.number(),
-                  polygon: z.object({
+                  page: z.number(),
+                  boundingBox: z.object({
                     "@odata.type": z.string(),
-                    "coordinates@odata.type": z.string(),
-                    coordinates: z.array(
-                      z.object({
-                        "@odata.type": z.string(),
-                        x: z.number(),
-                        y: z.number(),
-                      }),
-                    ),
+                    left: z.number(),
+                    top: z.number(),
+                    width: z.number(),
+                    height: z.number(),
+                    polygon: z.object({
+                      "@odata.type": z.string(),
+                      "coordinates@odata.type": z.string(),
+                      coordinates: z.array(
+                        z.object({
+                          "@odata.type": z.string(),
+                          x: z.number(),
+                          y: z.number(),
+                        }),
+                      ),
+                    }),
                   }),
                 }),
-              }),
-            }),
-            merchantName: z.object({
-              "@odata.type": z.string(),
-              value: z.string(),
-              confidence: z.number(),
-              location: z.object({
+              })
+              .optional(),
+            merchantName: z
+              .object({
                 "@odata.type": z.string(),
-                page: z.number(),
-                boundingBox: z.object({
+                value: z.string(),
+                confidence: z.number(),
+                location: z.object({
                   "@odata.type": z.string(),
-                  left: z.number(),
-                  top: z.number(),
-                  width: z.number(),
-                  height: z.number(),
-                  polygon: z.object({
+                  page: z.number(),
+                  boundingBox: z.object({
                     "@odata.type": z.string(),
-                    "coordinates@odata.type": z.string(),
-                    coordinates: z.array(
-                      z.object({
-                        "@odata.type": z.string(),
-                        x: z.number(),
-                        y: z.number(),
-                      }),
-                    ),
+                    left: z.number(),
+                    top: z.number(),
+                    width: z.number(),
+                    height: z.number(),
+                    polygon: z.object({
+                      "@odata.type": z.string(),
+                      "coordinates@odata.type": z.string(),
+                      coordinates: z.array(
+                        z.object({
+                          "@odata.type": z.string(),
+                          x: z.number(),
+                          y: z.number(),
+                        }),
+                      ),
+                    }),
                   }),
                 }),
-              }),
-            }),
+              })
+              .optional(),
           }),
           context: z.object({
             "@odata.type": z.string(),

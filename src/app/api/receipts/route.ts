@@ -22,10 +22,10 @@ export async function POST(req: Request) {
     const receiptsReturn = await ctx
       .insert(receipts)
       .values({
-        merchantAdress: fields.merchantAddress.value,
-        merchantPhone: fields.merchantPhoneNumber.value,
-        merchantName: fields.merchantName.value,
-        total: fields.total.value.replace(",", "."),
+        merchantAdress: fields.merchantAddress?.value,
+        merchantPhone: fields.merchantPhoneNumber?.value,
+        merchantName: fields.merchantName?.value,
+        total: fields.total?.value.replace(",", "."),
       })
       .returning();
     const receiptsItemsReq = items.map((item) => {
