@@ -4,4 +4,5 @@ export async function POST(req: Request, res: Response) {
   revalidatePath("/receipts/list", "page");
   revalidatePath("/receipts");
   revalidatePath("/");
+  return new Response();
 }
