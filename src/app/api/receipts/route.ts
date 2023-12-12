@@ -44,4 +44,5 @@ export async function POST(req: Request, res: Response) {
     await ctx.insert(receiptItems).values(receiptsItemsReq);
   });
   revalidatePath("/receipts");
+  return new Response();
 }
