@@ -1,7 +1,16 @@
-import { drizzle } from "drizzle-orm/mysql2";
-import mysql from "mysql2/promise";
 import { env } from "~/env";
 import * as schema from "./schema";
+import { Pool, neon, neonConfig } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-serverless";
 
-const connection = await mysql.createConnection(env.DATABASE_URL);
-export const db = drizzle(connection, { schema: schema, mode: "default" });
+import ws from "ws";
+neonConfig.webSocketConstructor = ws;
+
+neonConfig.fetchConnectionCache = true;
+const pool = new Pool({ connectionString: env.DATABASE_URL });
+pool.on("error", (err) => console.error(err)); // deal with e.g. re-connect
+// ...
+
+const client = await pool.connect();
+
+export const db = drizzle(client, { schema });
