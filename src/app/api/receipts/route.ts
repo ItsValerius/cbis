@@ -35,7 +35,9 @@ export async function POST(req: Request) {
       console.log(item.fields.totalPrice.value.replace(",", "."));
       return {
         name: item.fields.name.value,
-        price: item.fields.totalPrice.value.replace(",", "."),
+        price: item.fields.totalPrice.value
+          .replace(/[^0-9,.]/g, "")
+          .replace(",", "."),
         receiptId: receiptsReturn.at(0)?.id,
       };
     });
