@@ -14,7 +14,10 @@ import {
 } from "~/components/ui/card";
 export default async function Page() {
   return (
-    <main className=" flex min-h-screen  flex-col items-center justify-center gap-2 p-4">
+    <main className=" flex min-h-screen  flex-col items-center justify-center gap-8 p-4">
+      <h1 className="scroll-m-20 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent lg:text-5xl">
+        BillSplit
+      </h1>
       <Card className="flex flex-col items-center gap-2 shadow-xl">
         <CardHeader>
           <CardTitle>Upload a Receipt</CardTitle>
