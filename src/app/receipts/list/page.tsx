@@ -3,13 +3,13 @@ import { getReceipts } from "~/lib/helper";
 export default async function Page() {
   const receipts = await getReceipts();
   return (
-    <main className="mx-auto grid min-h-screen max-w-5xl grid-cols-3  gap-4 bg-slate-900 p-4 text-slate-100 ">
+    <main className="mx-auto grid min-h-screen max-w-5xl auto-rows-fr grid-cols-3  gap-4 bg-slate-900 p-4 text-slate-100 ">
       {receipts.map((receipt) => {
         return (
           <Link
             href={`/receipt/${receipt.id}`}
             key={receipt.id}
-            className="flex flex-col  gap-y-4 rounded border border-slate-500 bg-slate-800 p-4 shadow-md shadow-slate-700"
+            className="gp-y-4 flex flex-col rounded border border-slate-500 bg-slate-800 p-4 shadow-md shadow-slate-700 transition-colors duration-300 hover:bg-slate-700"
           >
             <div>
               <div className="flex justify-between gap-2">
@@ -30,7 +30,7 @@ export default async function Page() {
               </div>
             </div>
             <table className="w-full">
-              <caption>Receipt Items </caption>
+              <caption className="underline">Receipt Items </caption>
               <thead>
                 <tr>
                   <th className="text-left">Name</th>
