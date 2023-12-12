@@ -25,13 +25,13 @@ export async function POST(req: Request) {
         merchantAdress: fields.merchantAddress?.value,
         merchantPhone: fields.merchantPhoneNumber?.value,
         merchantName: fields.merchantName?.value,
-        total: fields.total?.value.replace(",", "."),
+        total: fields.total?.value,
       })
       .returning();
     const receiptsItemsReq = items.map((item) => {
       return {
         name: item.fields.name.value,
-        price: item.fields.totalPrice.value.replace(",", "."),
+        price: item.fields.totalPrice.value,
         receiptId: receiptsReturn.at(0)?.id,
       };
     });
