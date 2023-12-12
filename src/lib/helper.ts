@@ -5,7 +5,10 @@ import { db } from "~/server/db";
 export const getReceipts = cache(async () => {
   console.log("getting receipts");
 
-  return await db.query.receipts.findMany({ with: { receiptItems: true } });
+  return await db.query.receipts.findMany({
+    with: { receiptItems: true },
+    orderBy: (receipts, { asc }) => [asc(receipts.id)],
+  });
 });
 export const getReceipt = cache(async (id: number) => {
   console.log("getting receipt " + id);
