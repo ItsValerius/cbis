@@ -12,6 +12,7 @@ export const getReceipt = cache(async (id: number) => {
 
   return await db.query.receipts.findFirst({
     where: (receipts, { eq }) => eq(receipts.id, id),
+    orderBy: (receipts, { asc }) => [asc(receipts.id)],
     with: { receiptItems: true },
   });
 });
