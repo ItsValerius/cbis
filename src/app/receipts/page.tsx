@@ -31,11 +31,10 @@ export default async function Page() {
           </form>
         </CardContent>
         <CardFooter className="self-end">
-          <Button variant="secondary">
-            <>
-              <Link href="/receipts/list">Go To List</Link>
-              <ChevronRight />
-            </>
+          <Button variant="secondary" asChild>
+            <Link href="/receipts/list">
+              Go To List <ChevronRight />
+            </Link>
           </Button>
         </CardFooter>
       </Card>
