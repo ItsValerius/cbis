@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { receiptItems, receipts } from "~/server/db/schema";
 import { schema } from "~/server/schema/APIResponseSchema";
-export async function POST(req: Request) {
+export async function POST(req: Request, res: Response) {
   const parsedRequest = schema.safeParse(await req.json());
   if (!parsedRequest.success) {
     const { errors } = parsedRequest.error;
@@ -43,6 +43,5 @@ export async function POST(req: Request) {
     });
     await ctx.insert(receiptItems).values(receiptsItemsReq);
   });
-  revalidatePath("/receipts/list");
-  return new Response();
+  revalidatePath("/receipts");
 }
