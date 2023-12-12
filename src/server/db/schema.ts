@@ -36,7 +36,9 @@ export const receiptItems = pgTable("receiptItem", {
   price: decimal("price"),
   name: varchar("name", { length: 256 }),
   amount: integer("amount"),
-  receiptId: integer("receipt_id"),
+  receiptId: integer("receipt_id").references(() => receipts.id, {
+    onDelete: "cascade",
+  }),
 });
 
 export const receiptItemsRelation = relations(receiptItems, ({ one }) => ({

@@ -2,43 +2,53 @@ import { getReceipts } from "~/lib/helper";
 export default async function Page() {
   const receipts = await getReceipts();
   return (
-    <main className="grid min-h-screen grid-cols-3 grid-rows-3 gap-4 bg-slate-900 p-4 text-slate-50 ">
+    <main className="grid min-h-screen grid-cols-3 grid-rows-3 gap-4 bg-slate-900 p-4 text-slate-100 ">
       {receipts.map((receipt) => {
         return (
-          <div className="rounded border p-4 shadow-md shadow-slate-50">
-            <div key={receipt.id} className="border-b">
+          <div
+            key={receipt.id}
+            className="flex flex-col  gap-y-4 rounded border border-slate-500 bg-slate-800 p-4 shadow-md shadow-slate-700"
+          >
+            <div>
               <div className="flex justify-between gap-2">
-                Merchant Name:
-                <p className=" text-red-300">{receipt.merchantName ?? "-"}</p>
+                <p>Merchant Name:</p>
+                <p className=" text-right">{receipt.merchantName ?? "-"}</p>
               </div>
               <div className="flex justify-between gap-2">
-                Merchant Adress:
-                <p className=" text-red-300">{receipt.merchantAdress ?? "-"}</p>
+                <p>Merchant Adress:</p>
+                <p className=" text-right">{receipt.merchantAdress ?? "-"}</p>
               </div>
               <div className="flex justify-between gap-2">
-                Merchant Phone:{" "}
-                <p className=" text-red-300">{receipt.merchantPhone ?? "-"}</p>
+                <p>Merchant Phone:</p>
+                <p className=" text-right">{receipt.merchantPhone ?? "-"}</p>
               </div>
               <div className="flex justify-between gap-2">
-                Receipt Total:{" "}
-                <p className=" text-red-300">{receipt.total ?? "-"}€</p>
+                <p>Receipt Total:</p>
+                <p className=" ">{receipt.total ?? "-"}€</p>
               </div>
             </div>
-            Receipt Items:
-            <ul>
-              {receipt?.receiptItems.map((receiptItem) => {
-                return (
-                  <li key={receiptItem.id}>
-                    <div className="flex gap-2">
-                      Item Name:
-                      <p className=" text-red-300">{receiptItem.name}</p>- Item
-                      Price:
-                      <p className=" text-red-300">{receiptItem.price}€</p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+            <table className="w-full">
+              <caption>Receipt Items </caption>
+              <thead>
+                <tr>
+                  <th className="text-left">Name</th>
+                  <th className="text-right">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {receipt?.receiptItems.map((receiptItem) => {
+                  return (
+                    <tr
+                      key={receiptItem.id}
+                      className="border-y border-yellow-100"
+                    >
+                      <td className="">{receiptItem.name}</td>
+                      <td className="text-right">{receiptItem.price}€</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         );
       })}
