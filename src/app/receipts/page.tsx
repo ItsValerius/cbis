@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import ReceiptButton from "~/components/receipts/ReceiptButton";
 export default async function Page() {
   return (
     <main className=" flex min-h-screen flex-col items-center justify-center gap-8 p-4">
@@ -35,7 +36,7 @@ export default async function Page() {
               name="receipt"
               className="file:border-muted file:border-r file:hover:cursor-pointer"
             />
-            <Button type="submit">Submit</Button>
+            <ReceiptButton />
           </form>
         </CardContent>
         <CardFooter className="self-end">
