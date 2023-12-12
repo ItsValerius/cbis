@@ -41,7 +41,7 @@ export async function POST(req: Request, res: Response) {
     });
     await ctx.insert(receiptItems).values(receiptsItemsReq);
   });
-  revalidatePath("/receipts/list", "page");
+  revalidatePath("/receipts/list");
   await fetch("/receipts/list");
   return new Response();
 }
