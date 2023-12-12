@@ -19,6 +19,8 @@ export async function POST(req: Request) {
     parsedRequest.data.body.responsev2.predictionOutput.result.fields;
   const items =
     parsedRequest.data.body.responsev2.predictionOutput.result.items;
+  console.log(fields.total?.value.replace(/\D/g, "").replace(",", "."));
+
   await db.transaction(async (ctx) => {
     const receiptsReturn = await ctx
       .insert(receipts)
@@ -30,6 +32,7 @@ export async function POST(req: Request) {
       })
       .returning();
     const receiptsItemsReq = items.map((item) => {
+      console.log(item.fields.totalPrice.value.replace(",", "."));
       return {
         name: item.fields.name.value,
         price: item.fields.totalPrice.value.replace(",", "."),
