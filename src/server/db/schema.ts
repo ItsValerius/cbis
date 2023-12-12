@@ -18,6 +18,11 @@ import {
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const pgTable = pgTableCreator((name) => `test_${name}`);
+export type Receipt = typeof receipts.$inferSelect;
+export type ReceiptWithItems = typeof receipts.$inferSelect & {
+  receiptItems: ReceiptItem[];
+};
+export type ReceiptItem = typeof receiptItems.$inferSelect;
 
 export const receipts = pgTable("receipt", {
   id: serial("id").primaryKey(),
