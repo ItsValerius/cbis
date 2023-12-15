@@ -41,11 +41,7 @@ export async function POST(req: Request, res: Response) {
     });
     await ctx.insert(receiptItems).values(receiptsItemsReq);
   });
-  revalidatePath("/receipts/list", "page");
-  revalidatePath("/receipts");
   revalidatePath("/");
-  setTimeout(() => {
-    console.log("waiting to make sure that the page revalidates");
-  }, 500);
+
   return new Response();
 }
