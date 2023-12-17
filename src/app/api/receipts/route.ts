@@ -1,9 +1,14 @@
+import { Pool } from "@neondatabase/serverless";
+import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/neon-serverless";
 import { revalidatePath } from "next/cache";
-import { NextResponse } from "next/server";
-import { db } from "~/server/db";
+import { NextRequest, NextResponse } from "next/server";
+import { env } from "process";
+// import { db } from "~/server/db";
+import { redisPub } from "~/server/db/redis";
 import { receiptItems, receipts } from "~/server/db/schema";
 import { schema } from "~/server/schema/APIResponseSchema";
-export async function POST(req: Request, res: Response) {
+export async function POST(req: NextRequest, res: Response) {
   const parsedRequest = schema.safeParse(await req.json());
   if (!parsedRequest.success) {
     const { errors } = parsedRequest.error;
@@ -19,16 +24,26 @@ export async function POST(req: Request, res: Response) {
     parsedRequest.data.body.responsev2.predictionOutput.result.fields;
   const items =
     parsedRequest.data.body.responsev2.predictionOutput.result.items;
+  const searchParams = req.nextUrl.searchParams;
+  const query = searchParams.get("id");
 
-  await db.transaction(async (ctx) => {
+  if (!query) return;
+  const id = parseInt(query);
+
+  const pool = new Pool({ connectionString: env.DATABASE_URL });
+  const db = drizzle(pool);
+
+  const receipt = await db.transaction(async (ctx) => {
     const receiptsReturn = await ctx
-      .insert(receipts)
-      .values({
+      .update(receipts)
+      .set({
         merchantAdress: fields.merchantAddress?.value,
         merchantPhone: fields.merchantPhoneNumber?.value,
         merchantName: fields.merchantName?.value,
+        updated: true,
         total: fields.total?.value.replace(/[^0-9,.]/g, "").replace(",", "."), //Remove all strings that might be here
       })
+      .where(eq(receipts.id, id))
       .returning();
     const receiptsItemsReq = items.map((item) => {
       return {
@@ -40,12 +55,19 @@ export async function POST(req: Request, res: Response) {
       };
     });
     await ctx.insert(receiptItems).values(receiptsItemsReq);
+    return receiptsReturn[0];
   });
-  revalidatePath("/receipts/list", "page");
-  revalidatePath("/receipts");
+
+  if (receipt) {
+    const message = { created: true, id: receipt.id };
+    const channel = `receipt-${receipt.id}`;
+
+    redisPub.publish(channel, JSON.stringify(message));
+  }
+
+  await pool.end();
+
   revalidatePath("/");
-  setTimeout(() => {
-    console.log("waiting to make sure that the page revalidates");
-  }, 500);
+
   return new Response();
 }

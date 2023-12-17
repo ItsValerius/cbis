@@ -9,6 +9,7 @@ import {
   varchar,
   decimal,
   integer,
+  boolean,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -17,7 +18,7 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const pgTable = pgTableCreator((name) => `test_${name}`);
+export const pgTable = pgTableCreator((name) => `cbis_${name}`);
 export type Receipt = typeof receipts.$inferSelect;
 export type ReceiptWithItems = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
@@ -30,6 +31,7 @@ export const receipts = pgTable("receipt", {
   merchantName: varchar("merchantName", { length: 256 }),
   merchantPhone: varchar("merchantPhone", { length: 256 }),
   total: decimal("total"),
+  updated: boolean("updated"),
 });
 
 export const receiptRelation = relations(receipts, ({ many }) => ({
