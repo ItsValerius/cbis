@@ -1,6 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-import { EventNotifier, getSSEWriter } from "ts-sse";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import type { z } from "zod";
+import { getSSEWriter } from "ts-sse";
+import type { EventNotifier } from "ts-sse";
 import { redisSub } from "~/server/db/redis";
 import { syncSchema } from "~/server/schema/syncSchema";
 
@@ -32,11 +34,11 @@ export async function GET(
   const encoder = new TextEncoder();
   let abort = false;
 
-  request.signal.onabort = () => {
+  request.signal.onabort = async () => {
     console.log("aborted");
 
     abort = true;
-    writer.close();
+    await writer.close();
   };
   await redisSub.subscribe(`receipt-${params.id}`, (err) => {
     if (err) {
@@ -76,8 +78,8 @@ export async function GET(
     );
 
     // send update to stream
-    redisSub.on("message", async (channel, message) => {
-      notifier.update(
+    redisSub.on("message", (channel, message) => {
+      getSSEWriter(writer, encoder).update(
         {
           data: {
             sync_status: "sync_complete",
@@ -91,11 +93,13 @@ export async function GET(
         },
       );
       console.log(`received ${message} from ${channel}`);
-      await redisSub.unsubscribe(`receipt-${params.id}`);
+      redisSub
+        .unsubscribe(`receipt-${params.id}`)
+        .catch((err) => console.log(err));
     });
   };
 
-  syncStatusStream(getSSEWriter(writer, encoder));
+  await syncStatusStream(getSSEWriter(writer, encoder));
 
   return new NextResponse(responseStream.readable, {
     headers: {

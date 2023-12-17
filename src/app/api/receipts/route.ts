@@ -2,13 +2,13 @@ import { Pool } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { revalidatePath } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { env } from "process";
-// import { db } from "~/server/db";
 import { redisPub } from "~/server/db/redis";
 import { receiptItems, receipts } from "~/server/db/schema";
 import { schema } from "~/server/schema/APIResponseSchema";
-export async function POST(req: NextRequest, res: Response) {
+export async function POST(req: NextRequest) {
   const parsedRequest = schema.safeParse(await req.json());
   if (!parsedRequest.success) {
     const { errors } = parsedRequest.error;
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest, res: Response) {
     const message = { created: true, id: receipt.id };
     const channel = `receipt-${receipt.id}`;
 
-    redisPub.publish(channel, JSON.stringify(message));
+    await redisPub.publish(channel, JSON.stringify(message));
   }
 
   await pool.end();

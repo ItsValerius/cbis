@@ -1,18 +1,17 @@
 "use client";
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 export const EventSourceContext = createContext<null | {
   eventSource: EventSource | null;
   setId: Dispatch<SetStateAction<number | null>>;
-}>({ eventSource: null, setId: () => {} });
+}>({
+  eventSource: null,
+  setId: (e) => {
+    console.log(e);
+  },
+});
 
 export const EventSourceProvider = ({ children }: { children: ReactNode }) => {
   const [eventSource, setEventSource] = useState<null | EventSource>(null);

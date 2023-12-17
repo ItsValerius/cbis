@@ -1,6 +1,6 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
-import React, { useContext } from "react";
+import React from "react";
 import { postReceipt } from "~/app/receipts/action";
 import { Input } from "../ui/input";
 import ReceiptButton from "./ReceiptButton";
