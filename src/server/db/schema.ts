@@ -9,7 +9,12 @@ import {
   varchar,
   decimal,
   integer,
+  text,
+  timestamp,
+  primaryKey,
+  pgTable,
 } from "drizzle-orm/pg-core";
+import { AdapterAccount } from "next-auth/adapters";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -17,12 +22,16 @@ import {
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const pgTable = pgTableCreator((name) => `test_${name}`);
 export type Receipt = typeof receipts.$inferSelect;
 export type ReceiptWithItems = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
 };
+export type ReceiptWithItemsUsers = typeof receipts.$inferSelect & {
+  receiptItems: ReceiptItem[];
+  users: User;
+};
 export type ReceiptItem = typeof receiptItems.$inferSelect;
+export type User = typeof users.$inferSelect;
 
 export const receipts = pgTable("receipt", {
   id: serial("id").primaryKey(),
@@ -30,10 +39,17 @@ export const receipts = pgTable("receipt", {
   merchantName: varchar("merchantName", { length: 256 }),
   merchantPhone: varchar("merchantPhone", { length: 256 }),
   total: decimal("total"),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id),
 });
 
-export const receiptRelation = relations(receipts, ({ many }) => ({
+export const receiptRelation = relations(receipts, ({ many, one }) => ({
   receiptItems: many(receiptItems),
+  users: one(users, {
+    fields: [receipts.userId],
+    references: [users.id],
+  }),
 }));
 
 export const receiptItems = pgTable("receiptItem", {
@@ -47,8 +63,62 @@ export const receiptItems = pgTable("receiptItem", {
 });
 
 export const receiptItemsRelation = relations(receiptItems, ({ one }) => ({
-  author: one(receipts, {
+  receipt: one(receipts, {
     fields: [receiptItems.receiptId],
     references: [receipts.id],
   }),
 }));
+
+export const users = pgTable("user", {
+  id: text("id").notNull().primaryKey(),
+  name: text("name"),
+  email: text("email").notNull(),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  image: text("image"),
+});
+
+export const usersRelations = relations(users, ({ many }) => ({
+  receipts: many(receipts),
+}));
+
+export const accounts = pgTable(
+  "account",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").$type<AdapterAccount["type"]>().notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("providerAccountId").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (account) => ({
+    compoundKey: primaryKey(account.provider, account.providerAccountId),
+  }),
+);
+
+export const sessions = pgTable("session", {
+  sessionToken: text("sessionToken").notNull().primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  expires: timestamp("expires", { mode: "date" }).notNull(),
+});
+
+export const verificationTokens = pgTable(
+  "verificationToken",
+  {
+    identifier: text("identifier").notNull(),
+    token: text("token").notNull(),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (vt) => ({
+    compoundKey: primaryKey(vt.identifier, vt.token),
+  }),
+);

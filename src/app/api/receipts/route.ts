@@ -1,9 +1,11 @@
 import { revalidatePath } from "next/cache";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 import { receiptItems, receipts } from "~/server/db/schema";
 import { schema } from "~/server/schema/APIResponseSchema";
-export async function POST(req: Request, res: Response) {
+
+export async function POST(req: NextRequest, res: Response) {
   const parsedRequest = schema.safeParse(await req.json());
   if (!parsedRequest.success) {
     const { errors } = parsedRequest.error;
@@ -20,6 +22,11 @@ export async function POST(req: Request, res: Response) {
   const items =
     parsedRequest.data.body.responsev2.predictionOutput.result.items;
 
+  const searchParams = req.nextUrl.searchParams;
+  const userId = searchParams.get("userId");
+
+  if (!userId) throw new Error("fuck");
+
   await db.transaction(async (ctx) => {
     const receiptsReturn = await ctx
       .insert(receipts)
@@ -28,6 +35,7 @@ export async function POST(req: Request, res: Response) {
         merchantPhone: fields.merchantPhoneNumber?.value,
         merchantName: fields.merchantName?.value,
         total: fields.total?.value.replace(/[^0-9,.]/g, "").replace(",", "."), //Remove all strings that might be here
+        userId: userId,
       })
       .returning();
     const receiptsItemsReq = items.map((item) => {

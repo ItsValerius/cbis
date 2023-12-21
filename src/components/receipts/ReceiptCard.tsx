@@ -1,5 +1,8 @@
 import React from "react";
-import type { ReceiptWithItems } from "~/server/db/schema";
+import type {
+  ReceiptWithItems,
+  ReceiptWithItemsUsers,
+} from "~/server/db/schema";
 
 import {
   Card,
@@ -15,7 +18,7 @@ const ReceiptCard = ({
   receipt,
   children,
 }: {
-  receipt: ReceiptWithItems;
+  receipt: ReceiptWithItemsUsers;
   children?: React.JSX.Element;
 }) => {
   return (
@@ -39,6 +42,10 @@ const ReceiptCard = ({
         <div className="flex justify-between gap-2">
           <p>Receipt Total:</p>
           <p className=" ">{receipt.total ?? "-"}€</p>
+        </div>
+        <div className="flex justify-between gap-2">
+          <p>Created By:</p>
+          <p>{receipt.users.name}</p>
         </div>
       </CardContent>
       <CardFooter>
