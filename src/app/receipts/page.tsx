@@ -1,6 +1,3 @@
-import { Label } from "~/components/ui/label";
-import { postReceipt } from "./action";
-import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -12,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import ReceiptButton from "~/components/receipts/ReceiptButton";
+import ReceiptForm from "~/components/receipts/ReceiptForm";
 
 export default async function Page() {
   return (
@@ -26,19 +23,7 @@ export default async function Page() {
           <CardDescription>Analyze your receipt in the cloud.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form
-            action={postReceipt}
-            className="flex flex-col items-center gap-2"
-          >
-            <Label htmlFor="file_input">Upload Receipt</Label>
-            <Input
-              id="file_input"
-              type="file"
-              name="receipt"
-              className="file:border-muted file:border-r file:hover:cursor-pointer"
-            />
-            <ReceiptButton />
-          </form>
+          <ReceiptForm />
         </CardContent>
         <CardFooter className="self-end">
           <Button variant="secondary" asChild>

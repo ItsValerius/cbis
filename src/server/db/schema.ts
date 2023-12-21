@@ -13,6 +13,7 @@ import {
   timestamp,
   primaryKey,
   pgTable,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { AdapterAccount } from "next-auth/adapters";
 
@@ -42,6 +43,7 @@ export const receipts = pgTable("receipt", {
   userId: text("userId")
     .notNull()
     .references(() => users.id),
+  updated: boolean("updated"),
 });
 
 export const receiptRelation = relations(receipts, ({ many, one }) => ({
