@@ -114,7 +114,7 @@ export default async function HomePage() {
                 </p>
               </CardContent>
               <CardFooter className="mt-auto flex flex-col font-medium">
-                <div className="text-sky-500 dark:text-sky-400">Jane Smith</div>
+                <div className="text-sky-500 dark:text-sky-400">Axel Ihl</div>
                 <div className="text-slate-700 dark:text-slate-500">
                   Student, Münster
                 </div>
@@ -138,7 +138,7 @@ export default async function HomePage() {
                 </p>
               </CardContent>
               <CardFooter className="mt-auto flex flex-col font-medium">
-                <div className="text-sky-500 dark:text-sky-400">Jane Smith</div>
+                <div className="text-sky-500 dark:text-sky-400">Axel Ihl</div>
                 <div className="text-slate-700 dark:text-slate-500">
                   Student, Aachen
                 </div>
