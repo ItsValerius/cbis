@@ -69,6 +69,35 @@ export const receiptItemsRelation = relations(receiptItems, ({ one }) => ({
   }),
 }));
 
+export const groups = pgTable("group", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 256 }),
+});
+
+export const groupsRelations = relations(groups, ({ many }) => ({
+  users: many(users),
+}));
+
+export const usersToGroups = pgTable("usersToGroups", {
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id),
+  groupId: integer("groupId")
+    .notNull()
+    .references(() => groups.id),
+});
+
+export const usersToGroupsRelations = relations(usersToGroups, ({ one }) => ({
+  group: one(groups, {
+    fields: [usersToGroups.groupId],
+    references: [groups.id],
+  }),
+  user: one(users, {
+    fields: [usersToGroups.userId],
+    references: [users.id],
+  }),
+}));
+
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
@@ -79,6 +108,7 @@ export const users = pgTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
   receipts: many(receipts),
+  gruops: many(groups),
 }));
 
 export const accounts = pgTable(
