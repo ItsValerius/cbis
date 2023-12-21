@@ -32,7 +32,7 @@ export default async function HomePage() {
           </h2>
           <div className="grid place-items-center gap-10 md:grid-rows-3">
             <Card className="flex w-full flex-col items-center md:w-fit md:flex-row">
-              <CardHeader className="gap-2">
+              <CardHeader className="items-center gap-2">
                 <CardTitle className="md:text-2xl">
                   Effortless Bill Splitting
                 </CardTitle>
@@ -40,6 +40,7 @@ export default async function HomePage() {
                   alt="Split Bills"
                   height="200"
                   src="/img/feature-image.png"
+                  className="object-cover"
                   width="200"
                 />
               </CardHeader>
@@ -49,13 +50,14 @@ export default async function HomePage() {
               </CardContent>
             </Card>
             <Card className="flex w-full flex-col items-center md:w-fit md:flex-row-reverse md:justify-start md:place-self-end">
-              <CardHeader>
+              <CardHeader className="max-w-full items-center">
                 <CardTitle className="md:text-2xl">
                   Debt Tracking Made Simple
                 </CardTitle>
                 <Image
                   alt="Track Debts"
                   height="200"
+                  className="object-cover"
                   src="/img/feature-image.png"
                   width="200"
                 />
@@ -66,7 +68,7 @@ export default async function HomePage() {
               </CardContent>
             </Card>
             <Card className="flex w-full flex-col items-center md:w-fit md:flex-row">
-              <CardHeader className="gap-2">
+              <CardHeader className="items-center">
                 <CardTitle className="md:text-2xl">
                   Secure and Seamless Payments
                 </CardTitle>
@@ -74,6 +76,7 @@ export default async function HomePage() {
                   alt="Secure Payments"
                   height="200"
                   src="/img/feature-image.png"
+                  className="object-cover"
                   width="200"
                 />
               </CardHeader>
