@@ -30,61 +30,57 @@ export default async function HomePage() {
           <h2 className="mb-12 text-center text-3xl font-bold tracking-tight text-gray-700">
             Key Features
           </h2>
-          <div className="grid gap-10 md:grid-cols-3">
-            <Card>
-              <CardHeader>
+          <div className="grid place-items-center gap-10 md:grid-rows-3">
+            <Card className="flex w-full flex-col items-center md:w-fit md:flex-row">
+              <CardHeader className="gap-2">
+                <CardTitle className="md:text-2xl">
+                  Effortless Bill Splitting
+                </CardTitle>
                 <Image
                   alt="Split Bills"
                   height="200"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "200/200",
-                    objectFit: "cover",
-                  }}
+                  src="/img/feature-image.png"
                   width="200"
                 />
-                <CardTitle>Split Bills</CardTitle>
               </CardHeader>
-              <CardContent>
-                Easily split bills among friends or family. No more last-minute
-                calculations.
+              <CardContent className="max-w-md p-6 md:self-center">
+                Say goodbye to manual calculations! Easily split bills among
+                friends or family without the hassle of last-minute math.
               </CardContent>
             </Card>
-            <Card>
+            <Card className="flex w-full flex-col items-center md:w-fit md:flex-row-reverse md:justify-start md:place-self-end">
               <CardHeader>
+                <CardTitle className="md:text-2xl">
+                  Debt Tracking Made Simple
+                </CardTitle>
                 <Image
                   alt="Track Debts"
                   height="200"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "200/200",
-                    objectFit: "cover",
-                  }}
+                  src="/img/feature-image.png"
                   width="200"
                 />
-                <CardTitle>Track Debts</CardTitle>
-              </CardHeader>
-              <CardContent>
-                Keep track of who owes what. Never lose track of your debts.
+              </CardHeader>{" "}
+              <CardContent className="max-w-md p-6 md:self-center">
+                Keep tabs on who owes what effortlessly. Never lose track of
+                your debts with our intuitive debt tracking feature.
               </CardContent>
             </Card>
-            <Card>
-              <CardHeader>
+            <Card className="flex w-full flex-col items-center md:w-fit md:flex-row">
+              <CardHeader className="gap-2">
+                <CardTitle className="md:text-2xl">
+                  Secure and Seamless Payments
+                </CardTitle>
                 <Image
                   alt="Secure Payments"
                   height="200"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "200/200",
-                    objectFit: "cover",
-                  }}
+                  src="/img/feature-image.png"
                   width="200"
                 />
-                <CardTitle>Secure Payments</CardTitle>
               </CardHeader>
-              <CardContent>
-                Make secure payments through our platform. Your financial safety
-                is our priority.
+              <CardContent className="max-w-md p-6 md:self-center">
+                Prioritize your financial safety! Make secure payments through
+                our platform, ensuring a seamless and protected transaction
+                experience.
               </CardContent>
             </Card>
           </div>
