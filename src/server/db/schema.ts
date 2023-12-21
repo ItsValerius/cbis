@@ -16,6 +16,8 @@ import {
   boolean,
 } from "drizzle-orm/pg-core";
 import { AdapterAccount } from "next-auth/adapters";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -73,7 +75,11 @@ export const receiptItemsRelation = relations(receiptItems, ({ one }) => ({
 
 export const groups = pgTable("group", {
   id: serial("id").primaryKey(),
-  name: varchar("name", { length: 256 }),
+  name: varchar("name", { length: 256 }).notNull(),
+});
+
+export const insertGroupSchema = createInsertSchema(groups, {
+  name: z.string().min(1),
 });
 
 export const groupsRelations = relations(groups, ({ many }) => ({

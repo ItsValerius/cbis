@@ -11,8 +11,6 @@ const ReceiptForm = () => {
   return (
     <form
       action={async (formData) => {
-        console.log("server action");
-
         const receipt = await postReceipt(formData);
         if (receipt) setId(receipt.id);
       }}
