@@ -7,9 +7,11 @@ import { createGroupAction } from "~/app/groups/_actions/create-group.action";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { Label } from "../ui/label";
+import { useRouter } from "next/navigation";
 
 const GroupsForm = () => {
   const { toast } = useToast();
+  const router = useRouter();
 
   const [formState, onCreateGroupAction] = useFormState(createGroupAction, {
     form: {
@@ -25,6 +27,9 @@ const GroupsForm = () => {
         title: "Gruppe created",
       });
       formRef.current?.reset();
+      formState.groupId
+        ? router.push(`/groups/${formState.groupId}`)
+        : router.push(`/`);
     }
   }, [formState]);
 

@@ -1,5 +1,7 @@
 import { NextAuthOptions, getServerSession } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "~/server/db";
 import {
@@ -7,9 +9,19 @@ import {
   NextApiRequest,
   NextApiResponse,
 } from "next";
+import type { Adapter } from "next-auth/adapters";
+import { z } from "zod";
+import { eq } from "drizzle-orm";
+import { users } from "~/server/db/schema";
+import bcrypt from "bcrypt";
+
+const credSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
 
 export const authOptions = {
-  adapter: DrizzleAdapter(db),
+  adapter: DrizzleAdapter(db) as Adapter,
   session: {
     strategy: "jwt",
   },
@@ -18,9 +30,36 @@ export const authOptions = {
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_SECRET as string,
     }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        const parsedCred = credSchema.safeParse(credentials);
+
+        if (!parsedCred.success) {
+          return null;
+        }
+        const user = await db.query.users.findFirst({
+          where: eq(users.email, parsedCred.data.email),
+        });
+        if (!user || !user.password) return null;
+
+        const passwordMatch = await bcrypt.compare(
+          parsedCred.data.password,
+          user.password,
+        );
+        if (!passwordMatch) return null;
+
+        return user;
+      },
+    }),
   ],
   callbacks: {
-    async session({ session, user, token }) {
+    async session({ session, token }) {
+      console.log(session);
       session.user.id = token.sub!;
       return session;
     },

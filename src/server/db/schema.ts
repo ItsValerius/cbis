@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { relations } from "drizzle-orm";
+import { getTableColumns, relations } from "drizzle-orm";
 
 import {
   pgTableCreator,
@@ -14,6 +14,7 @@ import {
   primaryKey,
   pgTable,
   boolean,
+  uuid,
 } from "drizzle-orm/pg-core";
 import { AdapterAccount } from "next-auth/adapters";
 import { createInsertSchema } from "drizzle-zod";
@@ -42,7 +43,7 @@ export const receipts = pgTable("receipt", {
   merchantName: varchar("merchantName", { length: 256 }),
   merchantPhone: varchar("merchantPhone", { length: 256 }),
   total: decimal("total"),
-  userId: text("userId")
+  userId: uuid("userId")
     .notNull()
     .references(() => users.id),
   updated: boolean("updated"),
@@ -76,24 +77,35 @@ export const receiptItemsRelation = relations(receiptItems, ({ one }) => ({
 export const groups = pgTable("group", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 256 }).notNull(),
+  inviteUuid: text("inviteUuid").notNull(),
 });
 
 export const insertGroupSchema = createInsertSchema(groups, {
   name: z.string().min(1),
-});
+}).pick({ name: true });
 
 export const groupsRelations = relations(groups, ({ many }) => ({
-  users: many(users),
+  users: many(usersToGroups),
 }));
 
-export const usersToGroups = pgTable("usersToGroups", {
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id),
-  groupId: integer("groupId")
-    .notNull()
-    .references(() => groups.id),
-});
+export const usersToGroups = pgTable(
+  "usersToGroups",
+  {
+    userId: uuid("userId")
+      .notNull()
+      .references(() => users.id, {
+        onDelete: "cascade",
+      }),
+    groupId: integer("groupId")
+      .notNull()
+      .references(() => groups.id, {
+        onDelete: "cascade",
+      }),
+  },
+  (t) => ({
+    pk: primaryKey(t.userId, t.groupId),
+  }),
+);
 
 export const usersToGroupsRelations = relations(usersToGroups, ({ one }) => ({
   group: one(groups, {
@@ -107,22 +119,25 @@ export const usersToGroupsRelations = relations(usersToGroups, ({ one }) => ({
 }));
 
 export const users = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
+  id: uuid("id").defaultRandom().notNull().primaryKey(),
   name: text("name"),
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  password: text("password"),
 });
+
+export const { password, ...sanitizedUsers } = getTableColumns(users);
 
 export const usersRelations = relations(users, ({ many }) => ({
   receipts: many(receipts),
-  gruops: many(groups),
+  groups: many(usersToGroups),
 }));
 
 export const accounts = pgTable(
   "account",
   {
-    userId: text("userId")
+    userId: uuid("userId")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     type: text("type").$type<AdapterAccount["type"]>().notNull(),
@@ -143,7 +158,7 @@ export const accounts = pgTable(
 
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").notNull().primaryKey(),
-  userId: text("userId")
+  userId: uuid("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
