@@ -27,7 +27,7 @@ export default async function GroupIdPage({
       <Card className="w-1/2">
         <CardHeader>{groupUsers?.name}</CardHeader>
         <CardContent>
-          <div>
+          <div className="flex flex-col gap-y-4">
             {groupUsers?.users.map((user, index) => (
               <div key={index} className="flex items-center">
                 <div>
@@ -37,7 +37,7 @@ export default async function GroupIdPage({
                       src={user.user.image}
                     />
                   ) : (
-                    <div className="flex aspect-square w-12 items-center justify-center rounded-full bg-green-950 text-xl text-white">
+                    <div className="flex aspect-square w-16 items-center justify-center rounded-full bg-green-950 text-xl text-white">
                       {user.user.email!.at(0)?.toUpperCase()}
                     </div>
                   )}
@@ -46,9 +46,8 @@ export default async function GroupIdPage({
               </div>
             ))}
             <div>
-              <div className="mt-4">Invite Friends</div>
+              <div className="">Invite Friends</div>
               <div>
-                {" "}
                 {process.env.FRONTEND_URL}/api/invite/{groupUsers?.inviteUuid}
               </div>
             </div>

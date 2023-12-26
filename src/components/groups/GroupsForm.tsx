@@ -3,11 +3,11 @@
 import React, { useEffect, useRef } from "react";
 import { Input } from "../ui/input";
 import { useFormState } from "react-dom";
-import { createGroupAction } from "~/app/groups/_actions/create-group.action";
-import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { Label } from "../ui/label";
 import { useRouter } from "next/navigation";
+import GroupsButton from "./GroupsButton";
+import { createGroupAction } from "~/app/groups/_actions/create-group.action";
 
 const GroupsForm = () => {
   const { toast } = useToast();
@@ -46,7 +46,7 @@ const GroupsForm = () => {
         defaultValue={formState.form.name}
         hasError={formState.status === "field-errors" && !!formState.errors}
       />
-      <Button type="submit">Save</Button>
+      <GroupsButton />
     </form>
   );
 };

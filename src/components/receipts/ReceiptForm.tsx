@@ -1,10 +1,10 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
 import React from "react";
-import { postReceipt } from "~/app/receipts/action";
 import { Input } from "../ui/input";
 import ReceiptButton from "./ReceiptButton";
 import { useID } from "../providers/EventSourceProvider";
+import { postReceipt } from "~/app/receipts/action";
 
 const ReceiptForm = () => {
   const { setId } = useID();
