@@ -9,7 +9,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
   const receipt = await getReceipt(params.id);
   if (!receipt) return notFound();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4">
+    <main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center p-4">
       <ReceiptCard receipt={receipt}>
         <Button className="flex w-fit justify-start" asChild>
           <Link href="/receipts/list">Back</Link>
