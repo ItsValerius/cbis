@@ -4,6 +4,7 @@ import React from "react";
 import { getReceipt } from "~/lib/helper";
 import ReceiptCard from "../../../components/receipts/ReceiptCard";
 import { Button } from "~/components/ui/button";
+import ReceiptDeleteDialog from "~/components/receipts/ReceiptDeleteDialog";
 
 const Page = async ({ params }: { params: { id: number } }) => {
   const receipt = await getReceipt(params.id);
@@ -11,9 +12,12 @@ const Page = async ({ params }: { params: { id: number } }) => {
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center p-4">
       <ReceiptCard receipt={receipt}>
-        <Button className="flex w-fit justify-start" asChild>
-          <Link href="/receipts/list">Back</Link>
-        </Button>
+        <div className="flex w-full justify-between">
+          <Button className="flex w-fit justify-start" asChild>
+            <Link href="/receipts/list">Back</Link>
+          </Button>
+          <ReceiptDeleteDialog />
+        </div>
       </ReceiptCard>
     </main>
   );

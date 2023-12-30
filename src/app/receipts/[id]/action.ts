@@ -2,8 +2,9 @@
 
 import { RowModel } from "@tanstack/react-table";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 import { db } from "~/server/db";
-import { ReceiptItem, receiptItems } from "~/server/db/schema";
+import { ReceiptItem, receiptItems, receipts } from "~/server/db/schema";
 
 export const updateReceiptsItems = async (
   items: ReceiptItem[],
@@ -22,4 +23,9 @@ export const updateReceiptsItems = async (
   } catch (err) {
     console.log(err);
   }
+};
+
+export const deleteReceipt = async (id: number) => {
+  await db.delete(receipts).where(eq(receipts.id, id));
+  redirect("/receipts/list");
 };
