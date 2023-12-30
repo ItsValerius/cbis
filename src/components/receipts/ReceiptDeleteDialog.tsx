@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,12 +10,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
-import { Button, buttonVariants } from "../ui/button";
-import { useParams, useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { useParams } from "next/navigation";
 import { deleteReceipt } from "~/app/receipts/[id]/action";
 
 const ReceiptDeleteDialog = () => {
-  const router = useRouter();
   const params = useParams();
   const id = params.id;
   if (!id || Array.isArray(id)) return;

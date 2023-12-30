@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  ColumnDef,
-  RowData,
+  type ColumnDef,
+  type RowData,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { ReceiptItem } from "~/server/db/schema";
+import type { ReceiptItem } from "~/server/db/schema";
 import { Button } from "../ui/button";
 import { updateReceiptsItems } from "~/app/receipts/[id]/action";
 
@@ -29,12 +29,13 @@ interface DataTableProps<ReceiptItem> {
 }
 
 declare module "@tanstack/react-table" {
+  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   interface TableMeta<TData extends RowData> {
     updateData: (rowIndex: number, columnId: string, value: unknown) => void;
   }
 }
 
-export function ReceiptItemsDataTable<TData, TValue>({
+export function ReceiptItemsDataTable({
   columns,
   data,
   defaultColumn,

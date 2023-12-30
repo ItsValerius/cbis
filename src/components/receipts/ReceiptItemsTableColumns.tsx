@@ -1,6 +1,6 @@
 "use client";
-import { ColumnDef } from "@tanstack/react-table";
-import { ReceiptItem } from "~/server/db/schema";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { ReceiptItem } from "~/server/db/schema";
 import { Button } from "../ui/button";
 import { Trash, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
