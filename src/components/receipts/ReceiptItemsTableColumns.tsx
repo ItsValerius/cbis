@@ -1,6 +1,6 @@
 "use client";
 import type { ColumnDef } from "@tanstack/react-table";
-import type { ReceiptItem } from "~/server/db/schema";
+import type { NewReceiptItem, ReceiptItem } from "~/server/db/schema";
 import { Button } from "../ui/button";
 import { Trash, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
 
 // Give our default column cell renderer editing superpowers!
-export const defaultColumn: Partial<ColumnDef<ReceiptItem>> = {
+export const defaultColumn: Partial<ColumnDef<NewReceiptItem>> = {
   cell: ({ getValue, row: { index }, column: { id }, table }) => {
     const searchParams = useSearchParams()!;
     const edit = searchParams.get("edit");
@@ -37,7 +37,7 @@ export const defaultColumn: Partial<ColumnDef<ReceiptItem>> = {
   },
 };
 
-export const columns: ColumnDef<ReceiptItem>[] = [
+export const columns: ColumnDef<NewReceiptItem>[] = [
   {
     accessorKey: "name",
     header: "Name",
