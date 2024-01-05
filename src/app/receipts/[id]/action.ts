@@ -35,7 +35,7 @@ export const updateReceiptsItems = async (
       .onConflictDoUpdate({ target: receiptItems.id, set: item })
       .returning();
   });
-  revalidatePath(`/receipts/${items.at(0)?.id}`);
+  revalidatePath(`/receipts/${items.at(0)?.receiptId}`);
 };
 
 export const deleteReceipt = async (id: number) => {
