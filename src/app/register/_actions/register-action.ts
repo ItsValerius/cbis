@@ -59,13 +59,6 @@ export async function registerAction(
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
-  if (!session?.user) {
-    return {
-      form: submittedForm,
-      status: "error",
-      errors: "no active session",
-    };
-  }
 
   try {
     const parsedForm = registerSchema.parse(submittedForm);
@@ -81,7 +74,7 @@ export async function registerAction(
       };
     }
 
-    const hashedPassword = await bcrypt.hash(parsedForm.password, 15);
+    const hashedPassword = await bcrypt.hash(parsedForm.password, 10);
 
     await db.insert(users).values({
       email: parsedForm.email,
