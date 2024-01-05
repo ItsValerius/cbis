@@ -42,6 +42,8 @@ export type NewReceiptItem = typeof receiptItems.$inferInsert;
 
 export type User = typeof users.$inferSelect;
 
+export type Group = typeof groups.$inferInsert;
+
 export const receipts = pgTable("receipt", {
   id: serial("id").primaryKey(),
   merchantAdress: varchar("merchantAdress", { length: 256 }),

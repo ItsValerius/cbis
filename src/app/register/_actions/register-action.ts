@@ -6,6 +6,7 @@ import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
 import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
 
 type Form = {
   name: string;
@@ -81,7 +82,7 @@ export async function registerAction(
       name: parsedForm.name,
       password: hashedPassword,
     });
-
+    redirect("/login");
     return {
       form: {
         name: "",

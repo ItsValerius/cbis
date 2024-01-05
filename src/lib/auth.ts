@@ -26,6 +26,10 @@ export const authOptions = {
   session: {
     strategy: "jwt",
   },
+  pages: {
+    signIn: "/login",
+  },
+
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_ID,
@@ -52,6 +56,7 @@ export const authOptions = {
           parsedCred.data.password,
           user.password,
         );
+        console.log(passwordMatch);
         if (!passwordMatch) return null;
 
         return user;
@@ -63,6 +68,7 @@ export const authOptions = {
       session.user.id = token.sub!;
       return session;
     },
+
     async redirect({ url }) {
       if (url === "/img/bg-image.png") return "/";
 

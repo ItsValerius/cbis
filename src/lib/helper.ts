@@ -1,7 +1,8 @@
 "use server";
 import { cache } from "react";
 import { db } from "~/server/db";
-
+import { groups, usersToGroups } from "~/server/db/schema";
+import { eq, inArray } from "drizzle-orm";
 export const getReceipts = cache(async () => {
   console.log("getting receipts");
 
@@ -18,3 +19,43 @@ export const getReceipt = cache(async (id: number) => {
     with: { receiptItems: true, users: true },
   });
 });
+
+export const getGroups = cache(async (userId: string) => {
+  return await db.query.usersToGroups.findMany({
+    with: {
+      group: true,
+    },
+    columns: {},
+    where: (usersToGroups, { eq }) => eq(usersToGroups.userId, userId),
+  });
+});
+
+export const getGroupUsers = cache(async (groupId: number) => {
+  return await db.query.usersToGroups.findMany({
+    with: { user: true },
+    where: (usersToGroups) => eq(usersToGroups.groupId, groupId),
+  });
+});
+
+export const getGroupsAndMembers = async (userId: string) => {
+  // Get groups for the user
+  const userGroups = await getGroups(userId);
+
+  // Fetch members for each group
+  const groupsWithMembers = await Promise.all(
+    userGroups.map(async (userGroup) => {
+      const groupId = userGroup.group.id;
+
+      // Get members for the group
+      const groupMembers = await getGroupUsers(groupId);
+
+      // Combine group data with members
+      return {
+        group: userGroup.group,
+        members: groupMembers.map((userToGroup) => userToGroup.user),
+      };
+    }),
+  );
+
+  return groupsWithMembers;
+};

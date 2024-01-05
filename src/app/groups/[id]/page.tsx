@@ -1,8 +1,15 @@
 import { eq } from "drizzle-orm";
-import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "~/components/ui/card";
 import { db } from "~/server/db";
 import { groups } from "~/server/db/schema";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
 export default async function GroupIdPage({
   params,
@@ -58,6 +65,11 @@ export default async function GroupIdPage({
             </div>
           </div>
         </CardContent>
+        <CardFooter>
+          <Button asChild className="flex w-fit justify-start">
+            <Link href="/dashboard">Back</Link>
+          </Button>
+        </CardFooter>
       </Card>
     </main>
   );
