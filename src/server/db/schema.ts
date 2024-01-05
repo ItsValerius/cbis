@@ -39,8 +39,6 @@ export type ReceiptWithItemsUsers = typeof receipts.$inferSelect & {
 export type ReceiptItem = typeof receiptItems.$inferSelect;
 export type User = typeof users.$inferSelect;
 
-export const pgTable = pgTableCreator((name) => `cbis_${name}`);
-
 export const receipts = pgTable("receipt", {
   id: serial("id").primaryKey(),
   merchantAdress: varchar("merchantAdress", { length: 256 }),
