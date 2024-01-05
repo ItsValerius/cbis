@@ -7,6 +7,8 @@ import {
   CardFooter,
 } from "~/components/ui/card";
 import Image from "next/image";
+import featureImage from "~/assets/feature-image.png";
+import profileImage from "~/assets/profile-image.png";
 
 export default async function HomePage() {
   return (
@@ -39,7 +41,7 @@ export default async function HomePage() {
                 <Image
                   alt="Split Bills"
                   height="200"
-                  src="/img/feature-image.png"
+                  src={featureImage}
                   className="object-cover"
                   width="200"
                 />
@@ -58,7 +60,7 @@ export default async function HomePage() {
                   alt="Track Debts"
                   height="200"
                   className="object-cover"
-                  src="/img/feature-image.png"
+                  src={featureImage}
                   width="200"
                 />
               </CardHeader>{" "}
@@ -75,7 +77,7 @@ export default async function HomePage() {
                 <Image
                   alt="Secure Payments"
                   height="200"
-                  src="/img/feature-image.png"
+                  src={featureImage}
                   className="object-cover"
                   width="200"
                 />
@@ -99,7 +101,7 @@ export default async function HomePage() {
               <CardHeader className="flex items-center justify-center">
                 <Image
                   className="aspect-square rounded-full"
-                  src="/img/profile-image.png"
+                  src={profileImage}
                   alt="picture"
                   width="100"
                   height="100"
@@ -123,7 +125,7 @@ export default async function HomePage() {
               <CardHeader className="flex items-center justify-center">
                 <Image
                   className="aspect-square rounded-full"
-                  src="/img/profile-image.png"
+                  src={profileImage}
                   alt="picture"
                   width="100"
                   height="100"

@@ -1,13 +1,12 @@
-import { Pool } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/neon-serverless";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { env } from "process";
+import { db } from "~/server/db";
 import { redisPub } from "~/server/db/redis";
 import { receiptItems, receipts } from "~/server/db/schema";
 import { schema } from "~/server/schema/APIResponseSchema";
+
 export async function POST(req: NextRequest) {
   const parsedRequest = schema.safeParse(await req.json());
   if (!parsedRequest.success) {
@@ -29,9 +28,8 @@ export async function POST(req: NextRequest) {
 
   if (!query) return;
   const id = parseInt(query);
-
-  const pool = new Pool({ connectionString: env.DATABASE_URL });
-  const db = drizzle(pool);
+  const userId = searchParams.get("userId");
+  if (!userId) return;
 
   const receipt = await db.transaction(async (ctx) => {
     const receiptsReturn = await ctx
@@ -42,6 +40,7 @@ export async function POST(req: NextRequest) {
         merchantName: fields.merchantName?.value,
         updated: true,
         total: fields.total?.value.replace(/[^0-9,.]/g, "").replace(",", "."), //Remove all strings that might be here
+        userId: userId,
       })
       .where(eq(receipts.id, id))
       .returning();
@@ -64,8 +63,6 @@ export async function POST(req: NextRequest) {
 
     await redisPub.publish(channel, JSON.stringify(message));
   }
-
-  await pool.end();
 
   revalidatePath("/");
 
