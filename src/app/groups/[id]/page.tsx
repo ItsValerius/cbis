@@ -52,7 +52,8 @@ export default async function GroupIdPage({
             <div>
               <div className="">Invite Friends</div>
               <div>
-                {process.env.FRONTEND_URL}/api/invite/{groupUsers?.inviteUuid}
+                {process.env.VERCEL_URL ?? "localhost:3000"}/api/invite/
+                {groupUsers?.inviteUuid}
               </div>
             </div>
           </div>
