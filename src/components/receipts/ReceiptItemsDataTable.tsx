@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import type { ReceiptItem, NewReceiptItem } from "~/server/db/schema";
+import type { NewReceiptItem } from "~/server/db/schema";
 import { Button } from "../ui/button";
 import { updateReceiptsItems } from "~/app/receipts/[id]/action";
 import { Plus } from "lucide-react";

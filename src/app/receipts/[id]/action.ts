@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "~/server/db";
 import {
-  type ReceiptItem,
   receiptItems,
   receipts,
   type NewReceiptItem,
