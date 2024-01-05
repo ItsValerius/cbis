@@ -14,7 +14,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
       <ReceiptCard receipt={receipt}>
         <div className="flex w-full justify-between">
           <Button className="flex w-fit justify-start" asChild>
-            <Link href="/receipts/list">Back</Link>
+            <Link href={`/groups/${receipt?.groupId}`}>Back</Link>
           </Button>
           <ReceiptDeleteDialog id={params.id} />
         </div>

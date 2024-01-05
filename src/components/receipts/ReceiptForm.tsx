@@ -6,11 +6,12 @@ import ReceiptButton from "./ReceiptButton";
 import { useID } from "../providers/EventSourceProvider";
 import { postReceipt } from "~/app/receipts/action";
 
-const ReceiptForm = () => {
+const ReceiptForm = (props: { groupId: number }) => {
   const { setId } = useID();
   return (
     <form
       action={async (formData) => {
+        formData.append("groupId", String(props.groupId));
         const receipt = await postReceipt(formData);
         if (receipt) setId(receipt.id);
       }}

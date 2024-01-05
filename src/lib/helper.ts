@@ -59,3 +59,10 @@ export const getGroupsAndMembers = async (userId: string) => {
 
   return groupsWithMembers;
 };
+
+export const getReceiptsByGroup = cache(async (groupId: number) => {
+  return await db.query.receipts.findMany({
+    where: (receipts) => eq(receipts.groupId, groupId),
+    with: { receiptItems: true, users: true },
+  });
+});

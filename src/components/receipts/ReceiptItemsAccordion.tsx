@@ -25,7 +25,7 @@ const ReceiptItemsAccordion = ({
       type="single"
       collapsible
       className="w-full"
-      defaultValue={pathname !== "/receipts/list" ? "item-1" : undefined}
+      defaultValue={pathname.includes("receipts") ? "item-1" : undefined}
     >
       <AccordionItem value="item-1">
         <AccordionTrigger>Receipt Items</AccordionTrigger>

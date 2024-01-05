@@ -8,13 +8,21 @@ import { auth } from "~/lib/auth";
 
 export async function postReceipt(formData: FormData) {
   const session = await auth();
+
+  const groupId = formData.get("groupId") as String;
+  if (!groupId) return;
+
   if (!session?.user.id) return;
 
   const receiptImage = formData.get("receipt") as File;
   if (receiptImage.size === 0) return;
   const returningReceipt = await db
     .insert(receipts)
-    .values({ updated: false, userId: session.user.id })
+    .values({
+      updated: false,
+      userId: session.user.id,
+      groupId: Number(groupId),
+    })
     .returning({ id: receipts.id });
 
   console.log(returningReceipt);

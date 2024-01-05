@@ -147,7 +147,7 @@ export function ReceiptItemsDataTable({
           )}
         </TableBody>
       </Table>
-      {pathname !== "/receipts/list" && (
+      {pathname.includes("receipts") && (
         <Button
           variant="secondary"
           className="w-full rounded-b-sm rounded-t-none "

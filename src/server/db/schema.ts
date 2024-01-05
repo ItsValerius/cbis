@@ -42,6 +42,10 @@ export type NewReceiptItem = typeof receiptItems.$inferInsert;
 
 export type User = typeof users.$inferSelect;
 
+export type UserWithGroups = typeof users.$inferSelect & {
+  groups: Group[];
+};
+
 export type Group = typeof groups.$inferInsert;
 
 export const receipts = pgTable("receipt", {
@@ -54,6 +58,9 @@ export const receipts = pgTable("receipt", {
     .notNull()
     .references(() => users.id),
   updated: boolean("updated"),
+  groupId: integer("group_id").references(() => groups.id, {
+    onDelete: "cascade",
+  }),
 });
 
 export const receiptRelation = relations(receipts, ({ many, one }) => ({
@@ -61,6 +68,10 @@ export const receiptRelation = relations(receipts, ({ many, one }) => ({
   users: one(users, {
     fields: [receipts.userId],
     references: [users.id],
+  }),
+  groups: one(groups, {
+    fields: [receipts.groupId],
+    references: [groups.id],
   }),
 }));
 
@@ -93,6 +104,7 @@ export const insertGroupSchema = createInsertSchema(groups, {
 
 export const groupsRelations = relations(groups, ({ many }) => ({
   users: many(usersToGroups),
+  receipts: many(receipts),
 }));
 
 export const usersToGroups = pgTable(
