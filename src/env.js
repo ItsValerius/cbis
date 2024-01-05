@@ -29,7 +29,7 @@ export const env = createEnv({
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
       process.env.VERCEL ? z.string() : z.string().url(),
     ),
-    FRONTEND_URL: z.string().url(),
+    FRONTEND_URL: z.string().url().nullable(),
   },
 
   /**
