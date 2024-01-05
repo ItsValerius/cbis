@@ -18,13 +18,14 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import type { ReceiptItem } from "~/server/db/schema";
+import type { ReceiptItem, NewReceiptItem } from "~/server/db/schema";
 import { Button } from "../ui/button";
 import { updateReceiptsItems } from "~/app/receipts/[id]/action";
+import { Plus } from "lucide-react";
 
 interface DataTableProps<ReceiptItem> {
-  columns: ColumnDef<ReceiptItem>[];
-  defaultColumn: Partial<ColumnDef<ReceiptItem>>;
+  columns: ColumnDef<NewReceiptItem>[];
+  defaultColumn: Partial<ColumnDef<NewReceiptItem>>;
   data: ReceiptItem[];
 }
 
@@ -39,7 +40,7 @@ export function ReceiptItemsDataTable({
   columns,
   data,
   defaultColumn,
-}: DataTableProps<ReceiptItem>) {
+}: DataTableProps<NewReceiptItem>) {
   const [tableData, setTableData] = useState(data);
   const pathname = usePathname();
   const searchParams = useSearchParams()!;
@@ -119,6 +120,29 @@ export function ReceiptItemsDataTable({
               </TableCell>
             </TableRow>
           )}
+          {edit === "true" && (
+            <TableRow>
+              <TableCell colSpan={columns.length}>
+                <Button
+                  className="w-full"
+                  onClick={() => {
+                    setTableData((oldTableData) => {
+                      return [
+                        ...oldTableData,
+                        {
+                          name: "",
+                          price: "",
+                          receiptId: 3,
+                        },
+                      ];
+                    });
+                  }}
+                >
+                  <Plus size={16}></Plus>
+                </Button>
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
       {pathname !== "/receipts/list" && (
@@ -130,7 +154,8 @@ export function ReceiptItemsDataTable({
               console.log(table.getSelectedRowModel());
               const deletedItemIds = table
                 .getSelectedRowModel()
-                .rows.map((row) => row.original.id);
+                .rows.map((row) => row.original.id)
+                .filter((r): r is number => !!r);
 
               await updateReceiptsItems(tableData, deletedItemIds);
             }

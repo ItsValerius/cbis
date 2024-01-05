@@ -1,20 +1,42 @@
 "use server";
 
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { db } from "~/server/db";
-import { type ReceiptItem, receiptItems, receipts } from "~/server/db/schema";
+import {
+  type ReceiptItem,
+  receiptItems,
+  receipts,
+  type NewReceiptItem,
+} from "~/server/db/schema";
 
 export const updateReceiptsItems = async (
-  items: ReceiptItem[],
+  items: NewReceiptItem[],
   deletedItemIds: number[],
 ) => {
+  console.log(items);
+  console.log(deletedItemIds);
+
   items.map(async (item) => {
-    if (deletedItemIds.includes(item.id)) {
-      await db.delete(receiptItems).where(eq(receiptItems.id, item.id));
+    if (item.id && deletedItemIds.includes(item.id)) {
+      console.log(item.id);
+
+      const deleted = await db
+        .delete(receiptItems)
+        .where(eq(receiptItems.id, item.id))
+        .returning();
+      console.log(deleted);
+
+      return;
     }
-    await db.update(receiptItems).set(item).where(eq(receiptItems.id, item.id));
+    await db
+      .insert(receiptItems)
+      .values(item)
+      .onConflictDoUpdate({ target: receiptItems.id, set: item })
+      .returning();
   });
+  revalidatePath(`/receipts/${items.at(0)?.id}`);
 };
 
 export const deleteReceipt = async (id: number) => {

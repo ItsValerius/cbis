@@ -24,7 +24,7 @@ export type ReceiptWithItems = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
 };
 export type ReceiptItem = typeof receiptItems.$inferSelect;
-
+export type NewReceiptItem = typeof receiptItems.$inferInsert;
 export const receipts = pgTable("receipt", {
   id: serial("id").primaryKey(),
   merchantAdress: varchar("merchantAdress", { length: 256 }),

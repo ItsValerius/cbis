@@ -11,13 +11,10 @@ import {
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
 import { Button } from "../ui/button";
-import { useParams } from "next/navigation";
+
 import { deleteReceipt } from "~/app/receipts/[id]/action";
 
-const ReceiptDeleteDialog = () => {
-  const params = useParams();
-  const id = params.id;
-  if (!id || Array.isArray(id)) return;
+const ReceiptDeleteDialog = ({ id }: { id: number }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>

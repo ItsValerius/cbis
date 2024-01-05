@@ -16,7 +16,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
           <Button className="flex w-fit justify-start" asChild>
             <Link href="/receipts/list">Back</Link>
           </Button>
-          <ReceiptDeleteDialog />
+          <ReceiptDeleteDialog id={params.id} />
         </div>
       </ReceiptCard>
     </main>
