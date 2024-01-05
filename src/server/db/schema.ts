@@ -25,6 +25,9 @@ import { z } from "zod";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
+
+export const pgTable = pgTableCreator((name) => `cbis_${name}`);
+
 export type Receipt = typeof receipts.$inferSelect;
 export type ReceiptWithItems = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
