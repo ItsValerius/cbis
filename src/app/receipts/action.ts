@@ -4,14 +4,17 @@ import { revalidatePath } from "next/cache";
 import { env } from "~/env";
 import { db } from "~/server/db";
 import { receipts } from "~/server/db/schema";
+import { auth } from "~/lib/auth";
 
 export async function postReceipt(formData: FormData) {
+  const session = await auth();
+  if (!session?.user.id) return;
+
   const receiptImage = formData.get("receipt") as File;
   if (receiptImage.size === 0) return;
-  console.log(formData);
   const returningReceipt = await db
     .insert(receipts)
-    .values({ updated: false })
+    .values({ updated: false, userId: session.user.id })
     .returning({ id: receipts.id });
 
   console.log(returningReceipt);
@@ -20,6 +23,7 @@ export async function postReceipt(formData: FormData) {
   const newFormData = new FormData();
   newFormData.append("receipt", receiptImage);
   newFormData.append("id", String(returningReceipt[0].id));
+  newFormData.append("userId", session.user.id);
 
   await fetch(env.RECEIPT_PROCESSOR_URL, { method: "POST", body: newFormData });
   revalidatePath("/receipts/list");

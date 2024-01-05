@@ -1,5 +1,5 @@
 import React from "react";
-import type { ReceiptWithItems } from "~/server/db/schema";
+import type { ReceiptWithItemsUsers } from "~/server/db/schema";
 
 import {
   Card,
@@ -16,11 +16,11 @@ const ReceiptCard = ({
   receipt,
   children,
 }: {
-  receipt: ReceiptWithItems;
+  receipt: ReceiptWithItemsUsers;
   children?: React.JSX.Element;
 }) => {
   return (
-    <Card className="flex h-full w-[480px] max-w-full flex-col justify-between transition-shadow duration-500 hover:shadow-xl">
+    <Card className="flex w-[480px] max-w-full flex-col justify-between transition-shadow duration-500 hover:shadow-xl">
       <CardHeader>
         <CardTitle>Receipt ID: {receipt.id}</CardTitle>
       </CardHeader>
@@ -50,6 +50,12 @@ const ReceiptCard = ({
               {receipt.total ?? "-"}€
             </p>
           </div>
+          <div className="flex justify-between gap-2">
+            <p>Created By:</p>
+            <p className="w-1/2 overflow-hidden text-ellipsis whitespace-nowrap text-right">
+              {receipt.users.name ?? "-"}
+            </p>
+          </div>
         </CardContent>
       ) : (
         <CardContent className="flex flex-col gap-y-2">
@@ -67,6 +73,10 @@ const ReceiptCard = ({
           </div>
           <div className="flex justify-between gap-2">
             <p>Receipt Total:</p>
+            <Skeleton className="h-[24px] w-1/4" />
+          </div>
+          <div className="flex justify-between gap-2">
+            <p>Created By:</p>
             <Skeleton className="h-[24px] w-1/4" />
           </div>
         </CardContent>

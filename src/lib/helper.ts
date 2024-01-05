@@ -6,7 +6,7 @@ export const getReceipts = cache(async () => {
   console.log("getting receipts");
 
   return await db.query.receipts.findMany({
-    with: { receiptItems: true },
+    with: { receiptItems: true, users: true },
     orderBy: (receipts, { asc }) => [asc(receipts.id)],
   });
 });
@@ -15,6 +15,6 @@ export const getReceipt = cache(async (id: number) => {
 
   return await db.query.receipts.findFirst({
     where: (receipts, { eq }) => eq(receipts.id, id),
-    with: { receiptItems: true },
+    with: { receiptItems: true, users: true },
   });
 });
