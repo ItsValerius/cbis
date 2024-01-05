@@ -73,7 +73,10 @@ const ReceiptCard = ({
       )}
 
       <CardContent>
-        <ReceiptItemsAccordion receiptItems={receipt.receiptItems} />
+        <ReceiptItemsAccordion
+          receiptItems={receipt.receiptItems}
+          receiptId={receipt.id}
+        />
       </CardContent>
       <CardFooter>{children}</CardFooter>
     </Card>

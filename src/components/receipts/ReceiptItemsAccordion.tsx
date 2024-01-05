@@ -13,8 +13,10 @@ import { ReceiptItemsDataTable } from "./ReceiptItemsDataTable";
 
 const ReceiptItemsAccordion = ({
   receiptItems,
+  receiptId,
 }: {
   receiptItems: ReceiptItem[];
+  receiptId: number;
 }) => {
   const pathname = usePathname();
 
@@ -32,6 +34,7 @@ const ReceiptItemsAccordion = ({
             columns={columns}
             data={receiptItems}
             defaultColumn={defaultColumn}
+            receiptId={receiptId}
           />
         </AccordionContent>
       </AccordionItem>

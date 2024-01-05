@@ -27,6 +27,7 @@ interface DataTableProps<ReceiptItem> {
   columns: ColumnDef<NewReceiptItem>[];
   defaultColumn: Partial<ColumnDef<NewReceiptItem>>;
   data: ReceiptItem[];
+  receiptId: number;
 }
 
 declare module "@tanstack/react-table" {
@@ -40,6 +41,7 @@ export function ReceiptItemsDataTable({
   columns,
   data,
   defaultColumn,
+  receiptId,
 }: DataTableProps<NewReceiptItem>) {
   const [tableData, setTableData] = useState(data);
   const pathname = usePathname();
@@ -132,7 +134,7 @@ export function ReceiptItemsDataTable({
                         {
                           name: "",
                           price: "",
-                          receiptId: 3,
+                          receiptId: receiptId,
                         },
                       ];
                     });
