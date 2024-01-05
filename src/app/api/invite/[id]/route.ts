@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 import { groups, usersToGroups } from "~/server/db/schema";
@@ -43,7 +43,7 @@ export async function GET(
 
   await db.insert(usersToGroups).values({
     groupId: group.id,
-    userId: session!.user.id,
+    userId: session.user.id,
   });
 
   redirect(`/groups/${group.id}`);

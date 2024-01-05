@@ -2,7 +2,6 @@
 
 import { randomUUID } from "crypto";
 import { revalidatePath } from "next/cache";
-import { useRouter } from "next/router";
 import { ZodError } from "zod";
 import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
@@ -14,7 +13,11 @@ type Form = {
 
 type FieldErrorState = {
   status: "field-errors";
-  errors: any;
+  errors: {
+    [x: string]: string[] | undefined;
+    [x: number]: string[] | undefined;
+    [x: symbol]: string[] | undefined;
+  };
 };
 
 type DefaultState = {

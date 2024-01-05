@@ -4,7 +4,6 @@
 import { getTableColumns, relations } from "drizzle-orm";
 
 import {
-  pgTableCreator,
   serial,
   varchar,
   decimal,
@@ -16,7 +15,7 @@ import {
   boolean,
   uuid,
 } from "drizzle-orm/pg-core";
-import { AdapterAccount } from "next-auth/adapters";
+import type { AdapterAccount } from "next-auth/adapters";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 

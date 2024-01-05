@@ -1,8 +1,5 @@
 import React from "react";
-import type {
-  ReceiptWithItems,
-  ReceiptWithItemsUsers,
-} from "~/server/db/schema";
+import type { ReceiptWithItemsUsers } from "~/server/db/schema";
 
 import {
   Card,

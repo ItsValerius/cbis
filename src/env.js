@@ -19,6 +19,11 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    GOOGLE_ID: z.string(),
+    GOOGLE_SECRET: z.string(),
+    NEXTAUTH_SECRET: z.string(),
+    NEXTAUTH_URL: z.string().url(),
+    FRONTEND_URL: z.string().url(),
   },
 
   /**
@@ -39,6 +44,11 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     KV_URL: process.env.KV_URL,
     RECEIPT_PROCESSOR_URL: process.env.RECEIPT_PROCESSOR_URL,
+    GOOGLE_ID: process.env.GOOGLE_ID,
+    GOOGLE_SECRET: process.env.GOOGLE_SECRET,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    FRONTEND_URL: process.env.FRONTEND_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

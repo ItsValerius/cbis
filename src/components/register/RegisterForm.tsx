@@ -36,7 +36,7 @@ const RegisterForm = () => {
         name="name"
         defaultValue={formState.form.name}
         hasError={
-          formState.status === "field-errors" && !!formState.errors["name"]
+          formState.status === "field-errors" && !!formState.errors.name
         }
       />
 
@@ -47,7 +47,7 @@ const RegisterForm = () => {
         type="email"
         defaultValue={formState.form.email}
         hasError={
-          formState.status === "field-errors" && !!formState.errors["email"]
+          formState.status === "field-errors" && !!formState.errors.email
         }
       />
 
@@ -58,7 +58,7 @@ const RegisterForm = () => {
         type="password"
         defaultValue={formState.form.password}
         hasError={
-          formState.status === "field-errors" && !!formState.errors["password"]
+          formState.status === "field-errors" && !!formState.errors.password
         }
       />
       <Button type="submit">Save</Button>

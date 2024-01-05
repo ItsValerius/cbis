@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { db } from "~/server/db";
 import { groups } from "~/server/db/schema";
+import Image from "next/image";
 
 export default async function GroupIdPage({
   params,
@@ -32,9 +33,12 @@ export default async function GroupIdPage({
               <div key={index} className="flex items-center">
                 <div>
                   {user.user.image ? (
-                    <img
-                      className="h-16 w-16 rounded-full"
+                    <Image
+                      className="rounded-full"
                       src={user.user.image}
+                      width={64}
+                      height={64}
+                      alt="User"
                     />
                   ) : (
                     <div className="flex aspect-square w-16 items-center justify-center rounded-full bg-green-950 text-xl text-white">

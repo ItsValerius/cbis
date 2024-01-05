@@ -15,7 +15,11 @@ type Form = {
 
 type FieldErrorState = {
   status: "field-errors";
-  errors: any;
+  errors: {
+    [x: string]: string[] | undefined;
+    [x: number]: string[] | undefined;
+    [x: symbol]: string[] | undefined;
+  };
 };
 
 type DefaultState = {

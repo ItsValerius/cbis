@@ -1,10 +1,7 @@
-import { Pool } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/neon-serverless";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { env } from "process";
 import { db } from "~/server/db";
 import { redisPub } from "~/server/db/redis";
 import { receiptItems, receipts } from "~/server/db/schema";
