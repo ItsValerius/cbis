@@ -11,9 +11,9 @@ import {
   text,
   timestamp,
   primaryKey,
-  pgTable,
   boolean,
   uuid,
+  pgTableCreator,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from "next-auth/adapters";
 import { createInsertSchema } from "drizzle-zod";
@@ -35,6 +35,8 @@ export type ReceiptWithItemsUsers = typeof receipts.$inferSelect & {
 };
 export type ReceiptItem = typeof receiptItems.$inferSelect;
 export type User = typeof users.$inferSelect;
+
+export const pgTable = pgTableCreator((name) => `cbis_${name}`);
 
 export const receipts = pgTable("receipt", {
   id: serial("id").primaryKey(),

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import profileImage from "~/assets/profile-image.png";
 
 export default function Component() {
   return (
@@ -53,7 +54,7 @@ export default function Component() {
               <Avatar className="mx-auto h-24 w-24">
                 <AvatarImage asChild src="/img/profile-image.png">
                   <Image
-                    src="/img/profile-image.png"
+                    src={profileImage}
                     alt="logo"
                     width={100}
                     height={100}
@@ -68,7 +69,7 @@ export default function Component() {
               <Avatar className="mx-auto h-24 w-24">
                 <AvatarImage asChild src="/img/profile-image.png">
                   <Image
-                    src="/img/profile-image.png"
+                    src={profileImage}
                     alt="logo"
                     width={100}
                     height={100}
@@ -83,7 +84,7 @@ export default function Component() {
               <Avatar className="mx-auto h-24 w-24">
                 <AvatarImage asChild src="/img/profile-image.png">
                   <Image
-                    src="/img/profile-image.png"
+                    src={profileImage}
                     alt="logo"
                     width={100}
                     height={100}
@@ -98,7 +99,7 @@ export default function Component() {
               <Avatar className="mx-auto h-24 w-24">
                 <AvatarImage asChild src="/img/profile-image.png">
                   <Image
-                    src="/img/profile-image.png"
+                    src={profileImage}
                     alt="logo"
                     width={100}
                     height={100}

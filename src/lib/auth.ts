@@ -12,7 +12,7 @@ import type {
 import type { Adapter } from "next-auth/adapters";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
-import { users } from "~/server/db/schema";
+import { pgTable, users } from "~/server/db/schema";
 import bcrypt from "bcrypt";
 import { env } from "~/env";
 
@@ -22,7 +22,7 @@ const credSchema = z.object({
 });
 
 export const authOptions = {
-  adapter: DrizzleAdapter(db) as Adapter,
+  adapter: DrizzleAdapter(db, pgTable) as Adapter,
   session: {
     strategy: "jwt",
   },
@@ -62,6 +62,11 @@ export const authOptions = {
     async session({ session, token }) {
       session.user.id = token.sub!;
       return session;
+    },
+    async redirect({ url }) {
+      if (url === "/img/bg-image.png") return "/";
+
+      return url;
     },
   },
 } satisfies NextAuthOptions;
