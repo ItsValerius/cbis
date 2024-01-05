@@ -37,6 +37,9 @@ export type ReceiptWithItemsUsers = typeof receipts.$inferSelect & {
   users: User;
 };
 export type ReceiptItem = typeof receiptItems.$inferSelect;
+
+export type NewReceiptItem = typeof receiptItems.$inferInsert;
+
 export type User = typeof users.$inferSelect;
 
 export const receipts = pgTable("receipt", {

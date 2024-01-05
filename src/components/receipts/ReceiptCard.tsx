@@ -20,7 +20,7 @@ const ReceiptCard = ({
   children?: React.JSX.Element;
 }) => {
   return (
-    <Card className="flex w-[480px] max-w-full flex-col justify-between transition-shadow duration-500 hover:shadow-xl">
+    <Card className="flex w-[480px] max-w-full flex-col justify-between transition-shadow duration-500 hover:shadow-xl xl:w-full">
       <CardHeader>
         <CardTitle>Receipt ID: {receipt.id}</CardTitle>
       </CardHeader>
@@ -83,7 +83,10 @@ const ReceiptCard = ({
       )}
 
       <CardContent>
-        <ReceiptItemsAccordion receiptItems={receipt.receiptItems} />
+        <ReceiptItemsAccordion
+          receiptItems={receipt.receiptItems}
+          receiptId={receipt.id}
+        />
       </CardContent>
       <CardFooter>{children}</CardFooter>
     </Card>

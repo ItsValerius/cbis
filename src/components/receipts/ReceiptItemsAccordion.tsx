@@ -1,14 +1,4 @@
 "use client";
-import React from "react";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
 
 import {
   Accordion,
@@ -18,13 +8,18 @@ import {
 } from "~/components/ui/accordion";
 import type { ReceiptItem } from "~/server/db/schema";
 import { usePathname } from "next/navigation";
+import { columns, defaultColumn } from "./ReceiptItemsTableColumns";
+import { ReceiptItemsDataTable } from "./ReceiptItemsDataTable";
 
 const ReceiptItemsAccordion = ({
   receiptItems,
+  receiptId,
 }: {
   receiptItems: ReceiptItem[];
+  receiptId: number;
 }) => {
   const pathname = usePathname();
+
   return (
     <Accordion
       type="single"
@@ -35,26 +30,12 @@ const ReceiptItemsAccordion = ({
       <AccordionItem value="item-1">
         <AccordionTrigger>Receipt Items</AccordionTrigger>
         <AccordionContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-left">Name</TableHead>
-                <TableHead className="text-right">Price</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {receiptItems.map((receiptItem) => {
-                return (
-                  <TableRow key={receiptItem.id}>
-                    <TableCell className="">{receiptItem.name}</TableCell>
-                    <TableCell className="text-right">
-                      {receiptItem.price}€
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+          <ReceiptItemsDataTable
+            columns={columns}
+            data={receiptItems}
+            defaultColumn={defaultColumn}
+            receiptId={receiptId}
+          />
         </AccordionContent>
       </AccordionItem>
     </Accordion>
