@@ -17,27 +17,29 @@ export const updateReceiptsItems = async (
   console.log(items);
   console.log(deletedItemIds);
 
-  items.map(async (item) => {
-    if (item.id && deletedItemIds.includes(item.id)) {
-      console.log(item.id);
+  await Promise.all(
+    items.map(async (item) => {
+      if (item.id && deletedItemIds.includes(item.id)) {
+        console.log(item.id);
 
-      const deleted = await db
-        .delete(receiptItems)
-        .where(eq(receiptItems.id, item.id))
-        .returning();
-      console.log(deleted);
-      delete items[
-        items.findIndex((itemToRemove) => itemToRemove.id === item.id)
-      ];
-      return;
-    }
-    await db
-      .insert(receiptItems)
-      .values(item)
-      .onConflictDoUpdate({ target: receiptItems.id, set: item })
-      .returning();
-  });
-  revalidatePath(`/receipts/${items.at(0)?.receiptId}`);
+        const deleted = await db
+          .delete(receiptItems)
+          .where(eq(receiptItems.id, item.id))
+          .returning();
+        console.log(deleted);
+        delete items[
+          items.findIndex((itemToRemove) => itemToRemove.id === item.id)
+        ];
+        return;
+      }
+      await db
+        .insert(receiptItems)
+        .values(item)
+        .onConflictDoUpdate({ target: receiptItems.id, set: item });
+      return null;
+    }),
+  );
+  return revalidatePath(`/receipts/${items.at(0)?.receiptId}`);
 };
 
 export const deleteReceipt = async (id: number) => {

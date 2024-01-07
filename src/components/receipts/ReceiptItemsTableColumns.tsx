@@ -9,8 +9,7 @@ import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { authOptions } from "~/lib/auth";
+
 import fallbackUserImage from "~/assets/fallback-user-image.webp";
 
 import {
@@ -19,7 +18,6 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
-  SelectValue,
 } from "../ui/select";
 // Give our default column cell renderer editing superpowers!
 export const defaultColumn: Partial<ColumnDef<NewReceiptItem>> = {
@@ -86,18 +84,10 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
     header: "Assigned to",
     id: "userId",
 
-    cell: ({ getValue, row: { index, original }, column: { id }, table }) => {
+    cell: ({ getValue, row: { index }, column: { id }, table }) => {
       const initialValue = getValue();
       // We need to keep and update the state of the cell normally
-      const [value, setValue] = useState(initialValue);
-      const onBlur = () => {
-        console.log(value);
 
-        table.options.meta?.updateData(index, id, value);
-      };
-      useEffect(() => {
-        setValue(initialValue);
-      }, [initialValue]);
       const searchParams = useSearchParams()!;
       const edit = searchParams.get("edit");
       const users = table.options.meta?.users;
