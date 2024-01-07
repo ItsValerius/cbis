@@ -6,9 +6,10 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   Table,
@@ -46,15 +47,25 @@ export function ReceiptItemsDataTable({
   defaultColumn,
   receiptId,
 }: DataTableProps<NewReceiptItem>) {
+  const searchParams = useSearchParams()!;
+  const edit = searchParams.get("edit");
   const [tableData, setTableData] = useState(data);
   const pathname = usePathname();
-  const searchParams = useSearchParams()!;
   const router = useRouter();
+
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    delete: edit === "true" ? true : false,
+  });
+
   const table = useReactTable({
     data: tableData,
     columns,
     defaultColumn,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      columnVisibility,
+    },
     meta: {
       updateData: (rowIndex, columnId, value) => {
         setTableData((old) =>
@@ -72,7 +83,6 @@ export function ReceiptItemsDataTable({
       users,
     },
   });
-  const edit = searchParams.get("edit");
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams);
@@ -82,6 +92,10 @@ export function ReceiptItemsDataTable({
     },
     [searchParams],
   );
+
+  useEffect(() => {
+    table.getColumn("delete")?.toggleVisibility(edit === "true");
+  }, [edit]);
 
   return (
     <div className="rounded-md border">
@@ -180,6 +194,7 @@ export function ReceiptItemsDataTable({
                 }),
               );
             }
+
             router.push(
               pathname +
                 "?" +

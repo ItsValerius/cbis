@@ -19,6 +19,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "../ui/select";
+import { table } from "console";
 // Give our default column cell renderer editing superpowers!
 export const defaultColumn: Partial<ColumnDef<NewReceiptItem>> = {
   cell: ({ getValue, row: { index }, column: { id }, table }) => {
@@ -60,12 +61,11 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
   },
   {
     id: "delete",
+    enableHiding: true,
 
-    cell: ({ row }) => {
+    cell: ({ row, column, table }) => {
       const isSelected = row.getIsSelected();
-      const searchParams = useSearchParams()!;
-      const edit = searchParams.get("edit");
-      if (edit !== "true") return;
+
       return (
         <Button
           variant={isSelected ? "secondary" : "destructive"}
@@ -81,7 +81,7 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
   },
   {
     accessorKey: "userId",
-    header: "Assigned to",
+    header: "User",
     id: "userId",
 
     cell: ({ getValue, row: { index }, column: { id }, table }) => {
@@ -190,7 +190,7 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
             <SelectGroup className="">
               {users?.map((user) => {
                 return (
-                  <SelectItem value={user.id} key={user.id}>
+                  <SelectItem className="p-2" value={user.id} key={user.id}>
                     <Avatar>
                       {user.image ? (
                         <div className="flex w-full flex-row justify-start gap-2">
@@ -219,7 +219,7 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
                               height={48}
                             />
                           </AvatarFallback>
-                          <span className="hidden md:block">{user.name}</span>
+                          <span className="">{user.name}</span>
                         </div>
                       ) : (
                         <div className="flex w-full flex-row gap-2">
@@ -232,7 +232,7 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
                               height={48}
                             />
                           </div>
-                          <span className="hidden md:block">{user.name}</span>
+                          <span className="">{user.name}</span>
                         </div>
                       )}
                     </Avatar>
