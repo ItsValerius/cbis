@@ -24,8 +24,8 @@ const CopyInviteId = (props: { inviteId: string }) => {
                 });
               }}
               text={
-                process.env.NEXT_PUBLIC_VERCEL_URL ??
-                "localhost:3000" + `/api/invite/${props.inviteId}`
+                (process.env.NEXT_PUBLIC_VERCEL_URL ?? "localhost:3000") +
+                `/api/invite/${props.inviteId}`
               }
             >
               <p>Invite your Friends</p>
