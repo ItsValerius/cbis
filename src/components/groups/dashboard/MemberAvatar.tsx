@@ -1,7 +1,7 @@
 "use client";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import React from "react";
-import { User } from "~/server/db/schema";
+import type { User } from "~/server/db/schema";
 import Image from "next/image";
 import fallbackUserImage from "~/assets/fallback-user-image.webp";
 const MemberAvatar = (member: User) => {

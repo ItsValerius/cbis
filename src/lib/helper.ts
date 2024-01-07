@@ -1,8 +1,7 @@
 "use server";
 import { cache } from "react";
 import { db } from "~/server/db";
-import { groups, usersToGroups } from "~/server/db/schema";
-import { eq, inArray } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 export const getReceipts = cache(async () => {
   console.log("getting receipts");
 

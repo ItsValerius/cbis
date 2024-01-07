@@ -25,7 +25,7 @@ const Login = (props: Props) => {
     });
 
     if (!res?.error) {
-      router.push(props.callbackUrl ?? `https://cbis.vercel.app/dashboard`);
+      router.push(props.callbackUrl ?? `/dashboard`);
     }
   };
   return (

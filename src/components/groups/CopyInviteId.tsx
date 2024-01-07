@@ -10,9 +10,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { useToast } from "../ui/use-toast";
 
 const CopyInviteId = (props: { inviteId: string }) => {
   const [copied, setCopied] = useState(false);
+  const { toast } = useToast();
   return (
     <>
       <TooltipProvider>
@@ -22,6 +24,9 @@ const CopyInviteId = (props: { inviteId: string }) => {
               <CopyToClipboard
                 onCopy={() => {
                   setCopied(true);
+                  toast({
+                    title: "Copied Invite Link to Clipboard",
+                  });
                 }}
                 text={
                   process.env.VERCEL_URL ??

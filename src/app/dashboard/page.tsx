@@ -8,12 +8,13 @@ import fallbackUserImage from "~/assets/fallback-user-image.webp";
 import GroupsOverview from "~/components/groups/dashboard/GroupsOverview";
 
 import CreateGroupButton from "~/components/groups/dashboard/CreateGroupButton";
+import { redirect } from "next/navigation";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
   console.log(session);
   if (!session?.user.id) {
-    return;
+    return redirect("/login");
   }
 
   return (

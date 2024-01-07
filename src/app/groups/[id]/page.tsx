@@ -7,14 +7,12 @@ import {
 } from "~/components/ui/card";
 import { db } from "~/server/db";
 import { groups } from "~/server/db/schema";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import MemberAvatar from "~/components/groups/dashboard/MemberAvatar";
 import ReceiptCard from "~/components/receipts/ReceiptCard";
 import { getReceiptsByGroup } from "~/lib/helper";
 import ReceiptForm from "~/components/receipts/ReceiptForm";
-import ReceiptDeleteDialog from "~/components/receipts/ReceiptDeleteDialog";
 import { ChevronRight } from "lucide-react";
 import CopyInviteId from "~/components/groups/CopyInviteId";
 

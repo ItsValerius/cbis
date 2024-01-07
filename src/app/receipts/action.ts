@@ -9,7 +9,7 @@ import { auth } from "~/lib/auth";
 export async function postReceipt(formData: FormData) {
   const session = await auth();
 
-  const groupId = formData.get("groupId") as String;
+  const groupId = formData.get("groupId") as string;
   if (!groupId) return;
 
   if (!session?.user.id) return;

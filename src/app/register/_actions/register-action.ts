@@ -2,7 +2,6 @@
 
 import { eq } from "drizzle-orm";
 import { ZodError, z } from "zod";
-import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
 import bcrypt from "bcrypt";
@@ -53,8 +52,6 @@ export async function registerAction(
   state: RegisterState,
   formData: FormData,
 ): Promise<RegisterState> {
-  const session = await auth();
-
   const submittedForm = {
     name: formData.get("name") as string,
     email: formData.get("email") as string,

@@ -8,7 +8,7 @@ import {
   CardContent,
   CardFooter,
 } from "~/components/ui/card";
-import { getGroupsAndMembers } from "~/lib/helper";
+import type { getGroupsAndMembers } from "~/lib/helper";
 import MemberAvatar from "./MemberAvatar";
 
 export const GroupCards = ({
