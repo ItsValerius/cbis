@@ -10,6 +10,13 @@ import GroupsOverview from "~/components/groups/dashboard/GroupsOverview";
 import CreateGroupButton from "~/components/groups/dashboard/CreateGroupButton";
 import { redirect } from "next/navigation";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import LogoutButton from "~/components/groups/dashboard/LogoutButton";
+
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
   console.log(session);
@@ -27,27 +34,34 @@ const DashboardPage = async () => {
               {session?.user.name}
             </span>
           </h1>
-          <Avatar className=" h-12 w-12  rounded-full border shadow-xl">
-            {session?.user.image ? (
-              <AvatarImage asChild src="/img/profile-image.png">
-                <Image
-                  priority
-                  src={session?.user.image}
-                  alt="User Profile"
-                  fill
-                />
-              </AvatarImage>
-            ) : (
-              <AvatarFallback>
-                <Image
-                  priority
-                  src={fallbackUserImage}
-                  alt="Fallback User Image"
-                  fill
-                />
-              </AvatarFallback>
-            )}
-          </Avatar>
+          <Popover>
+            <PopoverTrigger>
+              <Avatar className=" h-12 w-12  rounded-full border shadow-xl">
+                {session?.user.image ? (
+                  <AvatarImage asChild src="/img/profile-image.png">
+                    <Image
+                      priority
+                      src={session?.user.image}
+                      alt="User Profile"
+                      fill
+                    />
+                  </AvatarImage>
+                ) : (
+                  <AvatarFallback>
+                    <Image
+                      priority
+                      src={fallbackUserImage}
+                      alt="Fallback User Image"
+                      fill
+                    />
+                  </AvatarFallback>
+                )}
+              </Avatar>
+            </PopoverTrigger>
+            <PopoverContent className="w-fit">
+              <LogoutButton />
+            </PopoverContent>
+          </Popover>
         </CardHeader>
         <CardContent>
           <CreateGroupButton />

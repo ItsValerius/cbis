@@ -28,6 +28,7 @@ export const authOptions = {
   },
   pages: {
     signIn: "/login",
+    signOut: "/logout",
   },
 
   providers: [
