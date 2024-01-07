@@ -1,8 +1,21 @@
 import { eq } from "drizzle-orm";
-import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+} from "~/components/ui/card";
 import { db } from "~/server/db";
 import { groups } from "~/server/db/schema";
-import Image from "next/image";
+import Link from "next/link";
+import { Button } from "~/components/ui/button";
+import MemberAvatar from "~/components/groups/dashboard/MemberAvatar";
+import ReceiptCard from "~/components/receipts/ReceiptCard";
+import { getReceiptsByGroup } from "~/lib/helper";
+import ReceiptForm from "~/components/receipts/ReceiptForm";
+import { ChevronRight } from "lucide-react";
+import CopyInviteId from "~/components/groups/CopyInviteId";
 
 export default async function GroupIdPage({
   params,
@@ -18,46 +31,56 @@ export default async function GroupIdPage({
         with: {
           user: true,
         },
+
         columns: {},
       },
     },
   });
 
+  const receipts = await getReceiptsByGroup(groupId);
+
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <Card className="w-1/2">
-        <CardHeader>{groupUsers?.name}</CardHeader>
+    <main className="mx-auto flex min-h-screen max-w-7xl items-center justify-center ">
+      <Card className="w-full">
+        <CardHeader>
+          <h2 className="text-3xl">{groupUsers?.name}</h2>
+          <CardDescription>
+            {groupUsers && <CopyInviteId inviteId={groupUsers?.inviteUuid} />}
+          </CardDescription>
+        </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-y-4">
-            {groupUsers?.users.map((user, index) => (
-              <div key={index} className="flex items-center">
-                <div>
-                  {user.user.image ? (
-                    <Image
-                      className="rounded-full"
-                      src={user.user.image}
-                      width={64}
-                      height={64}
-                      alt="User"
-                    />
-                  ) : (
-                    <div className="flex aspect-square w-16 items-center justify-center rounded-full bg-green-950 text-xl text-white">
-                      {user.user.email!.at(0)?.toUpperCase()}
-                    </div>
-                  )}
+            {groupUsers?.users.map((user) => (
+              <div className="flex flex-row items-center" key={user.user.id}>
+                <div className="flex flex-col items-center">
+                  <div>{user.user.name}</div>
+                  {user.user && <MemberAvatar {...user.user} />}
                 </div>
-                <div className="ml-4">{user.user.name}</div>
               </div>
             ))}
-            <div>
-              <div className="">Invite Friends</div>
-              <div>
-                {process.env.VERCEL_URL ?? "localhost:3000"}/api/invite/
-                {groupUsers?.inviteUuid}
-              </div>
-            </div>
           </div>
         </CardContent>
+        <CardContent className="mx-auto w-1/2">
+          <ReceiptForm groupId={groupId} />
+        </CardContent>
+        <CardContent className="grid grid-cols-3 gap-4">
+          {receipts.map((receipt) => (
+            <ReceiptCard receipt={receipt} key={receipt.id}>
+              <div className="flex w-full justify-between">
+                <Button variant="secondary" asChild>
+                  <Link href={`/receipts/${receipt.id}`}>
+                    Details <ChevronRight />
+                  </Link>
+                </Button>
+              </div>
+            </ReceiptCard>
+          ))}
+        </CardContent>
+        <CardFooter>
+          <Button asChild className="flex w-fit justify-start">
+            <Link href="/dashboard">Back</Link>
+          </Button>
+        </CardFooter>
       </Card>
     </main>
   );

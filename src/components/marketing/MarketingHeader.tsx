@@ -37,7 +37,7 @@ const MarketingHeader = () => {
           Contact
         </Link>
         <Button asChild className="ml-4 px-4 py-1" variant="outline">
-          <Link href="/api/auth/signin">Log in</Link>
+          <Link href="/login">Log in</Link>
         </Button>
       </nav>
     </header>
