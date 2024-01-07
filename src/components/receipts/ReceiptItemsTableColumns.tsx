@@ -19,7 +19,6 @@ import {
   SelectItem,
   SelectTrigger,
 } from "../ui/select";
-import { table } from "console";
 // Give our default column cell renderer editing superpowers!
 export const defaultColumn: Partial<ColumnDef<NewReceiptItem>> = {
   cell: ({ getValue, row: { index }, column: { id }, table }) => {
@@ -63,7 +62,7 @@ export const columns: ColumnDef<NewReceiptItem>[] = [
     id: "delete",
     enableHiding: true,
 
-    cell: ({ row, column, table }) => {
+    cell: ({ row }) => {
       const isSelected = row.getIsSelected();
 
       return (
