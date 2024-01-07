@@ -24,11 +24,7 @@ const CopyInviteId = (props: { inviteId: string }) => {
                   title: "Copied Invite Link to Clipboard",
                 });
               }}
-              text={
-                (process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-                  ? "https://cbis.vercel.app"
-                  : "http://localhost:3000") + `/api/invite/${props.inviteId}`
-              }
+              text={`https://cbis.vercel.app/api/invite/${props.inviteId}`}
             >
               <div className="flex items-center justify-center gap-1">
                 <p>Invite your Friends</p>
