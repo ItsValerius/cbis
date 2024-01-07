@@ -20,7 +20,6 @@ import LogoutButton from "~/components/groups/dashboard/LogoutButton";
 
 const DashboardPage = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
   if (!session?.user.id) {
     return redirect("/login");
   }
@@ -39,7 +38,7 @@ const DashboardPage = async () => {
             <PopoverTrigger>
               <Avatar className=" h-12 w-12  rounded-full border shadow-xl">
                 {session?.user.image ? (
-                  <AvatarImage asChild src="/img/profile-image.png">
+                  <AvatarImage asChild src={session?.user.image}>
                     <Image
                       priority
                       src={session?.user.image}
