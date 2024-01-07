@@ -26,7 +26,9 @@ export const updateReceiptsItems = async (
         .where(eq(receiptItems.id, item.id))
         .returning();
       console.log(deleted);
-
+      delete items[
+        items.findIndex((itemToRemove) => itemToRemove.id === item.id)
+      ];
       return;
     }
     await db
