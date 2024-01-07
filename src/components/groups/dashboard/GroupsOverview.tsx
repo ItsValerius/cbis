@@ -5,7 +5,7 @@ const GroupsOverview = async (params: { userId: string }) => {
   const groups = await getGroupsAndMembers(params.userId);
 
   return (
-    <div className="grid grid-cols-3 gap-4 pt-4">
+    <div className="flex flex-col gap-2 pt-4 md:grid md:grid-cols-3 md:gap-4">
       <GroupCards groups={groups} />
     </div>
   );

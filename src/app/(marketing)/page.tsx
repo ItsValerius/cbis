@@ -12,7 +12,7 @@ import profileImage from "~/assets/profile-image.png";
 
 export default async function HomePage() {
   return (
-    <div className="flex-1">
+    <div className=" flex-1">
       <section className="flex w-full items-center justify-center bg-gray-50 py-32">
         <div className="container px-4 text-center md:px-6">
           <h1 className=" text-4xl font-bold tracking-tighter ">

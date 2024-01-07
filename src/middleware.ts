@@ -10,6 +10,9 @@ export default withAuth({
         "/register",
         "/img/bg-image.png",
         "/login",
+        "/pricing",
+        "/about",
+        "/contact",
       ];
       if (notProtected.includes(req.nextUrl.pathname)) return true;
 

@@ -10,7 +10,7 @@ import CreateGroupButton from "~/components/groups/dashboard/CreateGroupButton";
 import { Button } from "~/components/ui/button";
 const loading = () => {
   return (
-    <main className="mx-auto max-w-5xl">
+    <main className="mx-auto w-full max-w-5xl">
       <Card>
         <CardHeader className="flex w-full flex-row justify-between">
           <h1 className="text-4xl">
@@ -23,7 +23,7 @@ const loading = () => {
           <CreateGroupButton />
         </CardContent>
       </Card>
-      <div className="grid grid-cols-3 gap-4 pt-4">
+      <div className="flex pt-4 md:grid md:grid-cols-3 md:gap-4">
         {new Array(3).fill(0).map((_, i) => {
           return (
             <Card key={i}>

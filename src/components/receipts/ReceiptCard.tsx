@@ -20,7 +20,7 @@ const ReceiptCard = ({
   children?: React.JSX.Element;
 }) => {
   return (
-    <Card className="flex w-[480px] max-w-full flex-col transition-shadow duration-500 hover:shadow-xl xl:w-full">
+    <Card className="flex w-full max-w-full flex-col transition-shadow duration-500 hover:shadow-xl md:w-[480px] xl:w-full">
       <CardHeader>
         <CardTitle>Receipt ID: {receipt.id}</CardTitle>
       </CardHeader>

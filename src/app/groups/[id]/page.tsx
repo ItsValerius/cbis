@@ -40,7 +40,7 @@ export default async function GroupIdPage({
   const receipts = await getReceiptsByGroup(groupId);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-7xl items-center justify-center ">
+    <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center">
       <Card className="w-full">
         <CardHeader>
           <h2 className="text-3xl">{groupUsers?.name}</h2>
@@ -60,10 +60,10 @@ export default async function GroupIdPage({
             ))}
           </div>
         </CardContent>
-        <CardContent className="mx-auto w-1/2">
+        <CardContent className="mx-auto w-full md:w-1/2 md:max-w-full">
           <ReceiptForm groupId={groupId} />
         </CardContent>
-        <CardContent className="grid grid-cols-3 gap-4">
+        <CardContent className="flex w-full pt-4 md:grid md:grid-cols-3 md:gap-4">
           {receipts.map((receipt) => (
             <ReceiptCard receipt={receipt} key={receipt.id}>
               <div className="flex w-full justify-between">
