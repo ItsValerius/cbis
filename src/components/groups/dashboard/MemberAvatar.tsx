@@ -8,7 +8,11 @@ const MemberAvatar = (member: User) => {
   return (
     <Avatar className=" block h-12  w-12 rounded-full border  ">
       {member.image ? (
-        <AvatarImage asChild src={member.image} className="h-12 w-12">
+        <AvatarImage
+          asChild
+          src={member.image}
+          className="h-12 w-12 rounded-full"
+        >
           <Image priority src={member.image} alt="User Profile" />
         </AvatarImage>
       ) : (
