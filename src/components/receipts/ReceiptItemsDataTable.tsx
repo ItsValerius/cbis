@@ -157,13 +157,28 @@ export function ReceiptItemsDataTable({
           className="w-full rounded-b-sm rounded-t-none "
           onClick={async () => {
             if (edit === "true") {
-              console.log(tableData);
-              const deletedItemIds = table
+              const selectedRows = table
                 .getSelectedRowModel()
-                .rows.map((row) => row.original.id)
+                .rows.map((row) => row.original);
+              const updateItems = tableData.filter(
+                (row) => !selectedRows.includes(row),
+              );
+              const selectedRowIds = selectedRows
+                .map((row) => row.id)
                 .filter((r): r is number => !!r);
 
-              await updateReceiptsItems(tableData, deletedItemIds);
+              await updateReceiptsItems(updateItems, selectedRowIds);
+              setTableData((old) =>
+                old.map((row) => {
+                  if (updateItems.includes(row)) {
+                    const updatedRow = updateItems.find(
+                      (updateItem) => row.id === updateItem.id,
+                    );
+                    if (updatedRow) return updatedRow;
+                  }
+                  return row;
+                }),
+              );
             }
             router.push(
               pathname +

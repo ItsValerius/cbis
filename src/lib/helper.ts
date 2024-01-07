@@ -2,17 +2,14 @@
 import { cache } from "react";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
+import { type NewReceiptItem, receiptItems } from "~/server/db/schema";
 export const getReceipts = cache(async () => {
-  console.log("getting receipts");
-
   return await db.query.receipts.findMany({
     with: { receiptItems: true, createdBy: true },
     orderBy: (receipts, { asc }) => [asc(receipts.id)],
   });
 });
 export const getReceipt = cache(async (id: number) => {
-  console.log("getting receipt " + id);
-
   return await db.query.receipts.findFirst({
     where: (receipts, { eq }) => eq(receipts.id, id),
     with: { receiptItems: true, createdBy: true },
@@ -66,3 +63,15 @@ export const getReceiptsByGroup = cache(async (groupId: number) => {
     with: { receiptItems: true, createdBy: true },
   });
 });
+
+export const deleteReceiptItemById = async (id: number) => {
+  return await db.delete(receiptItems).where(eq(receiptItems.id, id));
+};
+
+export const upsertReceiptItems = async (item: NewReceiptItem) => {
+  return await db
+    .insert(receiptItems)
+    .values(item)
+    .onConflictDoUpdate({ target: receiptItems.id, set: item })
+    .returning();
+};
