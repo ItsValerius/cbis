@@ -1,5 +1,5 @@
 import React from "react";
-import type { ReceiptWithItemsUsers } from "~/server/db/schema";
+import type { ReceiptWithItemsUser, User } from "~/server/db/schema";
 
 import {
   Card,
@@ -11,16 +11,19 @@ import {
 
 import ReceiptItemsAccordion from "./ReceiptItemsAccordion";
 import { Skeleton } from "../ui/skeleton";
+import { getGroupUsers } from "~/lib/helper";
 
-const ReceiptCard = ({
+const ReceiptCard = async ({
   receipt,
   children,
 }: {
-  receipt: ReceiptWithItemsUsers;
+  receipt: ReceiptWithItemsUser;
   children?: React.JSX.Element;
 }) => {
+  const groupAndUsers = await getGroupUsers(receipt.groupId);
+  const users: User[] = groupAndUsers.map((group) => group.user);
   return (
-    <Card className="flex w-full max-w-full flex-col transition-shadow duration-500 hover:shadow-xl md:w-[480px] xl:w-full">
+    <Card className="flex w-[480px] max-w-full flex-col transition-shadow duration-500 hover:shadow-xl xl:w-full">
       <CardHeader>
         <CardTitle>Receipt ID: {receipt.id}</CardTitle>
       </CardHeader>
@@ -53,7 +56,7 @@ const ReceiptCard = ({
           <div className="flex justify-between gap-2">
             <p>Created By:</p>
             <p className="w-1/2 overflow-hidden text-ellipsis whitespace-nowrap text-right">
-              {receipt.users.name ?? "-"}
+              {receipt.createdBy.name ?? "-"}
             </p>
           </div>
         </CardContent>
@@ -86,6 +89,7 @@ const ReceiptCard = ({
         <ReceiptItemsAccordion
           receiptItems={receipt.receiptItems}
           receiptId={receipt.id}
+          users={users}
         />
       </CardContent>
       <CardFooter>{children}</CardFooter>

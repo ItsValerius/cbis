@@ -18,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import type { NewReceiptItem } from "~/server/db/schema";
+import type { NewReceiptItem, User } from "~/server/db/schema";
 import { Button } from "../ui/button";
 import { updateReceiptsItems } from "~/app/receipts/[id]/action";
 import { Plus } from "lucide-react";
@@ -27,6 +27,7 @@ interface DataTableProps<ReceiptItem> {
   columns: ColumnDef<NewReceiptItem>[];
   defaultColumn: Partial<ColumnDef<NewReceiptItem>>;
   data: ReceiptItem[];
+  users: User[];
   receiptId: number;
 }
 
@@ -34,12 +35,14 @@ declare module "@tanstack/react-table" {
   // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   interface TableMeta<TData extends RowData> {
     updateData: (rowIndex: number, columnId: string, value: unknown) => void;
+    users: User[];
   }
 }
 
 export function ReceiptItemsDataTable({
   columns,
   data,
+  users,
   defaultColumn,
   receiptId,
 }: DataTableProps<NewReceiptItem>) {
@@ -66,6 +69,7 @@ export function ReceiptItemsDataTable({
           }),
         );
       },
+      users,
     },
   });
   const edit = searchParams.get("edit");
@@ -153,7 +157,7 @@ export function ReceiptItemsDataTable({
           className="w-full rounded-b-sm rounded-t-none "
           onClick={async () => {
             if (edit === "true") {
-              console.log(table.getSelectedRowModel());
+              console.log(tableData);
               const deletedItemIds = table
                 .getSelectedRowModel()
                 .rows.map((row) => row.original.id)
