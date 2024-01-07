@@ -13,11 +13,23 @@ const MemberAvatar = (member: User) => {
           src={member.image}
           className="h-12 w-12 rounded-full"
         >
-          <Image priority src={member.image} alt="User Profile" />
+          <Image
+            priority
+            src={member.image}
+            alt="User Profile"
+            width={48}
+            height={48}
+          />
         </AvatarImage>
       ) : (
         <AvatarFallback>
-          <Image priority src={fallbackUserImage} alt="Fallback User Image" />
+          <Image
+            priority
+            src={fallbackUserImage}
+            alt="Fallback User Image"
+            width={48}
+            height={48}
+          />
         </AvatarFallback>
       )}
     </Avatar>

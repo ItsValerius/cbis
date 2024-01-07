@@ -49,7 +49,7 @@ export default async function GroupIdPage({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col gap-y-4">
+          <div className="flex flex-row gap-4">
             {groupUsers?.users.map((user) => (
               <div className="flex flex-row items-center" key={user.user.id}>
                 <div className="flex flex-col items-center">
