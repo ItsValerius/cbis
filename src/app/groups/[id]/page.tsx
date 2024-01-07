@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
@@ -43,6 +44,9 @@ export default async function GroupIdPage({
       <Card className="w-full">
         <CardHeader>
           <h2 className="text-3xl">{groupUsers?.name}</h2>
+          <CardDescription>
+            {groupUsers && <CopyInviteId inviteId={groupUsers?.inviteUuid} />}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-y-4">
@@ -54,14 +58,6 @@ export default async function GroupIdPage({
                 </div>
               </div>
             ))}
-            <div>
-              <div className="">Invite Friends</div>
-              <div>
-                {groupUsers && (
-                  <CopyInviteId inviteId={groupUsers?.inviteUuid} />
-                )}
-              </div>
-            </div>
           </div>
         </CardContent>
         <CardContent className="mx-auto w-1/2">
