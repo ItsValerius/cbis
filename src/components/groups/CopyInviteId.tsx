@@ -25,8 +25,8 @@ const CopyInviteId = (props: { inviteId: string }) => {
                 });
               }}
               text={
-                (process.env.NEXT_PUBLIC_VERCEL_URL
-                  ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
+                (process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+                  ? "https://cbis.vercel.app"
                   : "http://localhost:3000") + `/api/invite/${props.inviteId}`
               }
             >
