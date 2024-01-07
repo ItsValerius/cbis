@@ -23,7 +23,7 @@ const loading = () => {
           <CreateGroupButton />
         </CardContent>
       </Card>
-      <div className="flex pt-4 md:grid md:grid-cols-3 md:gap-4">
+      <div className="flex flex-col pt-4 md:grid md:grid-cols-3 md:gap-4">
         {new Array(3).fill(0).map((_, i) => {
           return (
             <Card key={i}>

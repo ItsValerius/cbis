@@ -44,7 +44,8 @@ const DashboardPage = async () => {
                       priority
                       src={session?.user.image}
                       alt="User Profile"
-                      fill
+                      width={48}
+                      height={48}
                     />
                   </AvatarImage>
                 ) : (
@@ -53,7 +54,8 @@ const DashboardPage = async () => {
                       priority
                       src={fallbackUserImage}
                       alt="Fallback User Image"
-                      fill
+                      width={48}
+                      height={48}
                     />
                   </AvatarFallback>
                 )}
