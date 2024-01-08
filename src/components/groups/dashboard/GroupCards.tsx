@@ -10,6 +10,12 @@ import {
 } from "~/components/ui/card";
 import type { getGroupsAndMembers } from "~/lib/helper";
 import MemberAvatar from "./MemberAvatar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 export const GroupCards = ({
   groups,
@@ -23,11 +29,18 @@ export const GroupCards = ({
           <h2 className="text-3xl">{group.name}</h2>
         </CardHeader>
         <CardContent>
-          <div>Members:</div>
+          <div>Member:</div>
           <div className="flex flex-row flex-wrap gap-2">
-            {members.map((member) => (
-              <MemberAvatar key={member.id} {...member} />
-            ))}
+            <TooltipProvider>
+              {members.map((member) => (
+                <Tooltip key={member.id}>
+                  <TooltipTrigger>
+                    <MemberAvatar {...member} />
+                    <TooltipContent>{member.name}</TooltipContent>
+                  </TooltipTrigger>
+                </Tooltip>
+              ))}
+            </TooltipProvider>
           </div>
         </CardContent>
         <CardFooter>

@@ -16,6 +16,12 @@ import { getReceiptsByGroup } from "~/lib/helper";
 import ReceiptForm from "~/components/receipts/ReceiptForm";
 import { ChevronRight } from "lucide-react";
 import CopyInviteId from "~/components/groups/CopyInviteId";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 export default async function GroupIdPage({
   params,
@@ -50,11 +56,17 @@ export default async function GroupIdPage({
         </CardHeader>
         <CardContent>
           <div className="flex flex-row gap-4">
-            {groupUsers?.users.map((user) => (
-              <div className="flex flex-row items-center" key={user.user.id}>
+            {groupUsers?.users.map(({ user }) => (
+              <div className="flex flex-row items-center" key={user.id}>
                 <div className="flex flex-col items-center">
-                  <div>{user.user.name}</div>
-                  {user.user && <MemberAvatar {...user.user} />}
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <MemberAvatar {...user} />
+                      </TooltipTrigger>
+                      <TooltipContent>{user.name}</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </div>
             ))}
