@@ -1,7 +1,6 @@
-import { EventSourceProvider } from "~/components/providers/EventSourceProvider";
 import { ReceiptToastWrapped } from "~/components/receipts/ReceiptToast";
 
-export default function ReceiptLayout({
+export default function GroupLayout({
   children,
 }: {
   children: React.ReactNode;

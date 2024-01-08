@@ -1,25 +1,18 @@
 "use client";
+import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
-import type { Dispatch, ReactNode, SetStateAction } from "react";
+import type { ReactNode } from "react";
 
-export const EventSourceContext = createContext<null | {
-  eventSource: EventSource | null;
-  setId: Dispatch<SetStateAction<number | null>>;
-}>({
-  eventSource: null,
-  setId: (e) => {
-    console.log(e);
-  },
-});
+export const EventSourceContext = createContext<EventSource | null>(null);
 
 export const EventSourceProvider = ({ children }: { children: ReactNode }) => {
   const [eventSource, setEventSource] = useState<null | EventSource>(null);
-  const [id, setId] = useState<null | number>(null);
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
 
   useEffect(() => {
-    console.log(id);
-
     if (id) {
       const source = new EventSource(`/api/receipts/${id}/notify`, {
         withCredentials: true,
@@ -33,7 +26,7 @@ export const EventSourceProvider = ({ children }: { children: ReactNode }) => {
   }, [id]);
 
   return (
-    <EventSourceContext.Provider value={{ eventSource, setId }}>
+    <EventSourceContext.Provider value={eventSource}>
       {children}
     </EventSourceContext.Provider>
   );
@@ -43,9 +36,6 @@ export const useID = () => {
   const currentIDContext = useContext(EventSourceContext);
 
   if (!currentIDContext) {
-    throw new Error("useID has to be used within <currentIDContext.Provider>");
-  }
-  if (!currentIDContext.setId) {
     throw new Error("useID has to be used within <currentIDContext.Provider>");
   }
 
