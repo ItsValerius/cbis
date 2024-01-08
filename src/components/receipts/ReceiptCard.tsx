@@ -11,17 +11,16 @@ import {
 
 import ReceiptItemsAccordion from "./ReceiptItemsAccordion";
 import { Skeleton } from "../ui/skeleton";
-import { getGroupUsers } from "~/lib/helper";
 
 const ReceiptCard = async ({
   receipt,
   children,
+  users,
 }: {
   receipt: ReceiptWithItemsUser;
   children?: React.JSX.Element;
+  users: User[];
 }) => {
-  const groupAndUsers = await getGroupUsers(receipt.groupId);
-  const users: User[] = groupAndUsers.map((group) => group.user);
   return (
     <Card className="flex w-[480px] max-w-full flex-col transition-shadow duration-500 hover:shadow-xl xl:w-full">
       <CardHeader>
