@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { ReceiptWithItemsUser, User } from "~/server/db/schema";
 
 import {
@@ -9,9 +9,11 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 
-import ReceiptItemsAccordion from "./ReceiptItemsAccordion";
+import ReceiptItemsAccordion from "./receiptItems/ReceiptItemsAccordion";
 import { Skeleton } from "../ui/skeleton";
 import { getGroupUsers } from "~/lib/helper";
+import CalculateOwes from "./ReceiptUserExpenses";
+import ReceiptPaidBySelect from "./ReceiptPaidBySelect";
 
 const ReceiptCard = async ({
   receipt,
@@ -54,10 +56,8 @@ const ReceiptCard = async ({
             </p>
           </div>
           <div className="flex justify-between gap-2">
-            <p>Created By:</p>
-            <p className="w-1/2 overflow-hidden text-ellipsis whitespace-nowrap text-right">
-              {receipt.createdBy.name ?? "-"}
-            </p>
+            <p>Paid By:</p>
+            <ReceiptPaidBySelect receipt={receipt} users={users} />
           </div>
         </CardContent>
       ) : (
@@ -91,6 +91,11 @@ const ReceiptCard = async ({
           receiptId={receipt.id}
           users={users}
         />
+      </CardContent>
+      <CardContent>
+        <Suspense>
+          <CalculateOwes receipt={receipt} users={users}></CalculateOwes>
+        </Suspense>
       </CardContent>
       <CardFooter>{children}</CardFooter>
     </Card>
