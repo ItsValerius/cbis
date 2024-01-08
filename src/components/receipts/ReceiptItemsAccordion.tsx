@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import type { ReceiptItem } from "~/server/db/schema";
+import type { ReceiptItem, User } from "~/server/db/schema";
 import { usePathname } from "next/navigation";
 import { columns, defaultColumn } from "./ReceiptItemsTableColumns";
 import { ReceiptItemsDataTable } from "./ReceiptItemsDataTable";
@@ -14,9 +14,11 @@ import { ReceiptItemsDataTable } from "./ReceiptItemsDataTable";
 const ReceiptItemsAccordion = ({
   receiptItems,
   receiptId,
+  users,
 }: {
   receiptItems: ReceiptItem[];
   receiptId: number;
+  users: User[];
 }) => {
   const pathname = usePathname();
 
@@ -32,6 +34,7 @@ const ReceiptItemsAccordion = ({
         <AccordionContent>
           <ReceiptItemsDataTable
             columns={columns}
+            users={users}
             data={receiptItems}
             defaultColumn={defaultColumn}
             receiptId={receiptId}

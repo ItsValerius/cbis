@@ -32,9 +32,9 @@ export type Receipt = typeof receipts.$inferSelect;
 export type ReceiptWithItems = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
 };
-export type ReceiptWithItemsUsers = typeof receipts.$inferSelect & {
+export type ReceiptWithItemsUser = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
-  users: User;
+  createdBy: User;
 };
 export type ReceiptItem = typeof receiptItems.$inferSelect;
 
@@ -58,14 +58,16 @@ export const receipts = pgTable("receipt", {
     .notNull()
     .references(() => users.id),
   updated: boolean("updated"),
-  groupId: integer("group_id").references(() => groups.id, {
-    onDelete: "cascade",
-  }),
+  groupId: integer("group_id")
+    .references(() => groups.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
 });
 
 export const receiptRelation = relations(receipts, ({ many, one }) => ({
   receiptItems: many(receiptItems),
-  users: one(users, {
+  createdBy: one(users, {
     fields: [receipts.userId],
     references: [users.id],
   }),
@@ -83,12 +85,19 @@ export const receiptItems = pgTable("receiptItem", {
   receiptId: integer("receipt_id").references(() => receipts.id, {
     onDelete: "cascade",
   }),
+  userId: uuid("user_id").references(() => users.id, {
+    onDelete: "cascade",
+  }),
 });
 
 export const receiptItemsRelation = relations(receiptItems, ({ one }) => ({
   receipt: one(receipts, {
     fields: [receiptItems.receiptId],
     references: [receipts.id],
+  }),
+  ownedBy: one(users, {
+    fields: [receiptItems.userId],
+    references: [users.id],
   }),
 }));
 
@@ -151,6 +160,7 @@ export const { password, ...sanitizedUsers } = getTableColumns(users);
 export const usersRelations = relations(users, ({ many }) => ({
   receipts: many(receipts),
   groups: many(usersToGroups),
+  receiptItems: many(receiptItems),
 }));
 
 export const accounts = pgTable(
