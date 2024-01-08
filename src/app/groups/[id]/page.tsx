@@ -63,7 +63,7 @@ export default async function GroupIdPage({
         <CardContent className="mx-auto w-full md:w-1/2 md:max-w-full">
           <ReceiptForm groupId={groupId} />
         </CardContent>
-        <CardContent className="flex w-full pt-4 md:grid md:grid-cols-3 md:gap-4">
+        <CardContent className="flex w-full flex-col gap-2 pt-4 md:grid md:grid-cols-3 md:gap-4">
           {receipts.map((receipt) => (
             <ReceiptCard receipt={receipt} key={receipt.id}>
               <div className="flex w-full justify-between">
