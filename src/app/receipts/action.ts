@@ -34,6 +34,6 @@ export async function postReceipt(formData: FormData) {
   newFormData.append("userId", session.user.id);
 
   await fetch(env.RECEIPT_PROCESSOR_URL, { method: "POST", body: newFormData });
-  revalidatePath("/receipts/list");
+  revalidatePath("/groups/" + groupId);
   return returningReceipt[0];
 }
