@@ -13,6 +13,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from "~/components/ui/breadcrumb";
+import GroupCardEmpty from "~/components/groups/dashboard/GroupCardEmpty";
 const loading = () => {
   return (
     <main className="mx-auto w-full max-w-7xl">
@@ -35,7 +36,8 @@ const loading = () => {
           <Skeleton className="h-12 w-12 rounded-full" />
         </CardHeader>
       </Card>
-      <div className="flex flex-col pt-4 md:grid md:grid-cols-3 md:gap-4">
+      <div className="flex flex-col gap-2 pt-4 md:grid md:grid-cols-3 md:gap-4">
+        <GroupCardEmpty />
         {new Array(3).fill(0).map((_, i) => {
           return (
             <Card key={i}>
