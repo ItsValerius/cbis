@@ -53,7 +53,9 @@ const Login = (props: Props) => {
         <Separator className="my-4" />
 
         <Button
-          onClick={() => signIn("google")}
+          onClick={() =>
+            signIn("google", { callbackUrl: props.callbackUrl ?? `/dashboard` })
+          }
           variant="secondary"
           className="flex w-full max-w-52  gap-2"
         >
@@ -88,7 +90,9 @@ const Login = (props: Props) => {
           Sign in with Google
         </Button>
         <Button
-          onClick={() => signIn("github")}
+          onClick={() =>
+            signIn("github", { callbackUrl: props.callbackUrl ?? `/dashboard` })
+          }
           variant="secondary"
           className="flex w-full max-w-52  gap-2"
         >
@@ -100,7 +104,11 @@ const Login = (props: Props) => {
           Sign in with Github
         </Button>
         <Button
-          onClick={() => signIn("discord")}
+          onClick={() =>
+            signIn("discord", {
+              callbackUrl: props.callbackUrl ?? `/dashboard`,
+            })
+          }
           variant="secondary"
           className="flex w-full max-w-52  gap-2"
         >
