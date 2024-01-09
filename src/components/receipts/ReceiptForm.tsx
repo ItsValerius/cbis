@@ -35,7 +35,7 @@ const ReceiptForm = (props: {
           setOpen(false);
         }
       }}
-      className="flex flex-col items-center gap-2"
+      className="flex flex-col items-center gap-2 p-4 py-2 md:p-0"
     >
       <Input
         id="file_input"

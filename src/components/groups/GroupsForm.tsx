@@ -37,7 +37,7 @@ const GroupsForm = () => {
     <form
       ref={formRef}
       action={onCreateGroupAction}
-      className="flex flex-col gap-2 md:min-w-[20rem]"
+      className="flex w-full flex-col gap-2 p-4 md:p-0"
     >
       <Label htmlFor="name">Name</Label>
       <Input
