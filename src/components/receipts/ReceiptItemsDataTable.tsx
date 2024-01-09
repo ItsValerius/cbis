@@ -21,7 +21,7 @@ import {
 } from "~/components/ui/table";
 import type { NewReceiptItem, User } from "~/server/db/schema";
 import { Button } from "../ui/button";
-import { updateReceiptsItems } from "~/app/receipts/[id]/action";
+import { updateReceiptsItems } from "~/app/(user)/receipts/[id]/action";
 import { Plus } from "lucide-react";
 
 interface DataTableProps<ReceiptItem> {

@@ -12,7 +12,7 @@ import {
 } from "~/components/ui/alert-dialog";
 import { Button } from "../ui/button";
 
-import { deleteReceipt } from "~/app/receipts/[id]/action";
+import { deleteReceipt } from "~/app/(user)/receipts/[id]/action";
 
 const ReceiptDeleteDialog = ({ id }: { id: number }) => {
   return (

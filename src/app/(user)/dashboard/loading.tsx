@@ -10,7 +10,7 @@ import CreateGroupButton from "~/components/groups/dashboard/CreateGroupButton";
 import { Button } from "~/components/ui/button";
 const loading = () => {
   return (
-    <main className="mx-auto w-full max-w-5xl">
+    <main className="mx-auto w-full max-w-7xl">
       <Card>
         <CardHeader className="flex w-full flex-row justify-between">
           <h1 className="text-4xl">

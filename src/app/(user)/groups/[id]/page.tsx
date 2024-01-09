@@ -12,7 +12,7 @@ import MemberAvatar from "~/components/groups/dashboard/MemberAvatar";
 import ReceiptCard from "~/components/receipts/ReceiptCard";
 import { getGroupUsersByGroupId, getReceiptsByGroup } from "~/lib/helper";
 import ReceiptForm from "~/components/receipts/ReceiptForm";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import CopyInviteId from "~/components/groups/CopyInviteId";
 import {
   Tooltip,
@@ -23,6 +23,13 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/lib/auth";
 import { redirect } from "next/navigation";
+import { Separator } from "~/components/ui/separator";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "~/components/ui/breadcrumb";
+import ReceiptCardEmpty from "~/components/receipts/ReceiptCardEmpty";
 
 export default async function GroupIdPage({
   params,
@@ -44,9 +51,18 @@ export default async function GroupIdPage({
   const receipts = await getReceiptsByGroup(groupId);
 
   return (
-    <main className="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center">
+    <div className="flex flex-col gap-2">
       <Card className="w-full">
         <CardHeader>
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem isCurrentPage>
+              <BreadcrumbLink href={`/groups/${groupId}`}>Group</BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <h2 className="text-3xl">{groupUsers?.name}</h2>
           <CardDescription>
             {groupUsers && <CopyInviteId inviteId={groupUsers?.inviteUuid} />}
@@ -70,28 +86,35 @@ export default async function GroupIdPage({
             ))}
           </div>
         </CardContent>
-        <CardContent className="mx-auto w-full md:w-1/2 md:max-w-full">
-          <ReceiptForm groupId={groupId} />
-        </CardContent>
-        <CardContent className="flex w-full flex-col gap-2 pt-4 md:grid md:grid-cols-3 md:gap-4">
-          {receipts.map((receipt) => (
-            <ReceiptCard receipt={receipt} users={users} key={receipt.id}>
-              <div className="flex w-full justify-between">
-                <Button variant="secondary" asChild>
-                  <Link href={`/receipts/${receipt.id}`}>
-                    Details <ChevronRight />
-                  </Link>
-                </Button>
-              </div>
-            </ReceiptCard>
-          ))}
-        </CardContent>
+
         <CardFooter>
-          <Button asChild className="flex w-fit justify-start">
-            <Link href="/dashboard">Back</Link>
+          <Button
+            className="flex w-fit justify-start"
+            asChild
+            variant="secondary"
+          >
+            <Link href="/dashboard">
+              <ChevronLeft />
+              Back
+            </Link>
           </Button>
         </CardFooter>
       </Card>
-    </main>
+
+      <div className="flex w-full flex-col gap-2  md:grid md:grid-cols-3 md:gap-4">
+        <ReceiptCardEmpty groupdId={groupId} />
+        {receipts.map((receipt) => (
+          <ReceiptCard receipt={receipt} users={users} key={receipt.id}>
+            <div className="flex w-full justify-between">
+              <Button variant="secondary" asChild>
+                <Link href={`/receipts/${receipt.id}`}>
+                  Details <ChevronRight />
+                </Link>
+              </Button>
+            </div>
+          </ReceiptCard>
+        ))}
+      </div>
+    </div>
   );
 }

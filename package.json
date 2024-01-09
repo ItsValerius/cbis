@@ -49,6 +49,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-sse": "^0.0.6",
     "utf-8-validate": "^6.0.3",
+    "vaul": "^0.8.0",
     "ws": "^8.16.0",
     "zod": "^3.22.4"
   },

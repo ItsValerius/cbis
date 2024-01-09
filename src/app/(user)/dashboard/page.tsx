@@ -25,7 +25,7 @@ const DashboardPage = async () => {
   }
 
   return (
-    <main className="mx-auto max-w-5xl">
+    <>
       <Card>
         <CardHeader className="flex w-full flex-row justify-between">
           <h1 className="text-4xl">
@@ -71,7 +71,7 @@ const DashboardPage = async () => {
       </Card>
 
       <GroupsOverview userId={session?.user.id} />
-    </main>
+    </>
   );
 };
 
