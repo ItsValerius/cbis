@@ -28,6 +28,7 @@ import {
   BreadcrumbLink,
 } from "~/components/ui/breadcrumb";
 import ReceiptCardEmpty from "~/components/receipts/ReceiptCardEmpty";
+import GroupExpenses from "~/components/groups/GroupExpenses";
 
 export default async function GroupIdPage({
   params,
@@ -90,7 +91,9 @@ export default async function GroupIdPage({
             ))}
           </div>
         </CardContent>
-
+        <CardContent>
+          <GroupExpenses receipts={receipts} users={users} />
+        </CardContent>
         <CardFooter>
           <Button
             className="flex w-fit justify-start"
