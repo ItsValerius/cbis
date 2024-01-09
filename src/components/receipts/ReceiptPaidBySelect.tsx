@@ -78,7 +78,7 @@ const ReceiptPaidBySelect = ({
                     />
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden md:block">{user.name}</span>
+                <span className="block">{user.name}</span>
               </div>
             </SelectItem>
           );
