@@ -3,7 +3,11 @@
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { deleteReceiptItemById, upsertReceiptItems } from "~/lib/helper";
+import {
+  deleteReceiptItemById,
+  updateTotalPrice,
+  upsertReceiptItems,
+} from "~/lib/helper";
 import { db } from "~/server/db";
 import { receipts, type NewReceiptItem } from "~/server/db/schema";
 
@@ -18,18 +22,32 @@ export const deleteReceipt = async (id: number) => {
 export const updateReceiptsItems = async (
   tableData: NewReceiptItem[],
   itemsToRemoveIds: number[],
+  receiptId: number,
 ): Promise<void> => {
-  // Iterate through the items to be removed
   for (const id of itemsToRemoveIds) {
-    // Find the index of the item in the tableData array
-
-    // If the item is found, remove it from the array and delete it from the database
     await deleteReceiptItemById(id);
   }
+  let totalPrice = 0;
   for (const remainingItem of tableData) {
     await upsertReceiptItems(remainingItem);
+    totalPrice += parseFloat(remainingItem.price ?? "0");
   }
-  // At this point, tableData contains items without the ones that were removed
+
+  await updateTotalPrice(totalPrice.toPrecision(3), receiptId);
+
   console.log("Updated tableData:", tableData);
   revalidatePath(`/receipts/${tableData.at(0)?.receiptId}`);
+};
+
+export const updateUserThatPaid = async (
+  newUserThatPaid: string,
+  receiptId: number,
+) => {
+  const updated = await db
+    .update(receipts)
+    .set({ userId: newUserThatPaid })
+    .where(eq(receipts.id, receiptId))
+    .returning();
+  revalidatePath(`/receipts/${updated.at(0)?.id}`);
+  return updated;
 };

@@ -5,19 +5,21 @@ import { eq } from "drizzle-orm";
 import {
   type NewReceiptItem,
   receiptItems,
+  receipts,
   groups,
   users,
+
 } from "~/server/db/schema";
 export const getReceipts = cache(async () => {
   return await db.query.receipts.findMany({
-    with: { receiptItems: true, createdBy: true },
+    with: { receiptItems: true, paidBy: true },
     orderBy: (receipts, { asc }) => [asc(receipts.id)],
   });
 });
 export const getReceipt = cache(async (id: number) => {
   return await db.query.receipts.findFirst({
     where: (receipts, { eq }) => eq(receipts.id, id),
-    with: { receiptItems: true, createdBy: true },
+    with: { receiptItems: true, paidBy: true },
   });
 });
 
@@ -63,7 +65,7 @@ export const getReceiptsByGroup = cache(async (groupId: number) => {
   return await db.query.receipts.findMany({
     orderBy: (receipts, { desc }) => [desc(receipts.id)],
     where: (receipts) => eq(receipts.groupId, groupId),
-    with: { receiptItems: true, createdBy: true },
+    with: { receiptItems: true, paidBy: true },
   });
 });
 
@@ -77,4 +79,11 @@ export const upsertReceiptItems = async (item: NewReceiptItem) => {
     .values(item)
     .onConflictDoUpdate({ target: receiptItems.id, set: item })
     .returning();
+};
+
+export const updateTotalPrice = async (newPrice: string, receiptId: number) => {
+  return await db
+    .update(receipts)
+    .set({ total: newPrice })
+    .where(eq(receipts.id, receiptId));
 };
