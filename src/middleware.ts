@@ -13,6 +13,7 @@ export default withAuth({
         "/pricing",
         "/about",
         "/contact",
+        "/api/revalidate",
       ];
       if (notProtected.includes(req.nextUrl.pathname)) return true;
 
