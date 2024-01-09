@@ -65,7 +65,9 @@ export default async function GroupIdPage({
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
-          <h2 className="text-3xl">{groupUsers?.name}</h2>
+          <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+            {groupUsers?.name}
+          </h2>
           <CardDescription>
             {groupUsers && <CopyInviteId inviteId={groupUsers?.inviteUuid} />}
           </CardDescription>

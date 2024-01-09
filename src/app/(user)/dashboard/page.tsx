@@ -41,7 +41,7 @@ const DashboardPage = async () => {
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
-            <h1 className="text-4xl">
+            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
               Hallo{" "}
               <span className="text-bold text-gradient bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                 {session?.user.name}

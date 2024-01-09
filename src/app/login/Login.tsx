@@ -38,7 +38,7 @@ const Login = (props: Props) => {
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center p-4">
       <Card className="flex  max-w-full flex-col items-center justify-center gap-2 p-6 transition-shadow duration-500  xl:w-full">
-        <h1 className=" text-4xl font-bold tracking-tighter ">
+        <h1 className=" scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl ">
           Login{" "}
           <span className="text-gradient bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
             BillSplitt

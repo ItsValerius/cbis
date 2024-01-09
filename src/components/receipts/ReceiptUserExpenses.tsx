@@ -52,8 +52,10 @@ const ExpenseSplitter = ({
 
   return (
     <div>
-      <h2>Expense Splitter</h2>
-      <ul>
+      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+        Summary
+      </h4>
+      <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
         {users.map((user) => {
           if (user.id === receipt.userId) return;
           return (

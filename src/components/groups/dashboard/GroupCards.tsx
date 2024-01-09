@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardContent,
   CardFooter,
+  CardTitle,
 } from "~/components/ui/card";
 import type { getGroupUsersByUserId } from "~/lib/helper";
 import MemberAvatar from "./MemberAvatar";
@@ -26,10 +27,9 @@ export const GroupCards = ({
     return (
       <Card key={group.name}>
         <CardHeader>
-          <h2 className="text-3xl">{group.name}</h2>
+          <CardTitle>{group.name}</CardTitle>
         </CardHeader>
         <CardContent>
-          <div>Member:</div>
           <div className="flex flex-row flex-wrap gap-2">
             <TooltipProvider>
               {group.users.map(({ user }) => (

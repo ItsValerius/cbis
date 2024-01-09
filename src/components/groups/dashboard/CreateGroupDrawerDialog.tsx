@@ -35,7 +35,9 @@ const CreateGroupDrawerDialog = () => {
             className="m-0 flex h-full w-full flex-col rounded p-0 "
           >
             <PlusIcon />
-            Create new Group
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+              Create new Group
+            </h4>
           </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
