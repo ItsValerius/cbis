@@ -27,9 +27,9 @@ const loading = () => {
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
-            <h1 className="text-4xl">
+            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
               Hallo{" "}
-              <Skeleton className=" inline-block h-6 w-40 align-baseline" />
+              <Skeleton className=" inline-block h-8 w-40 align-baseline" />
             </h1>
           </div>
 

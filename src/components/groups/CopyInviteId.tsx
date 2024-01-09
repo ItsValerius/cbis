@@ -26,7 +26,9 @@ const CopyInviteId = (props: { inviteId: string }) => {
             text={`https://cbis.vercel.app/api/invite/${props.inviteId}`}
           >
             <div className="flex items-center justify-center gap-1">
-              <p>Invite your Friends</p>
+              <p className="text-sm font-medium leading-none">
+                Invite your Friends
+              </p>
               <Copy size={16} />
             </div>
           </CopyToClipboard>
