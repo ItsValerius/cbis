@@ -82,26 +82,26 @@ const ExpenseSplitter = ({
 
     return transactions;
   }
-
-  return (
-    <div>
-      <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-        Summary
-      </h4>
-      <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
-        {transactions.map((transaction, i) => {
-          return (
-            <li key={i}>
-              {users.find((user) => user.id === transaction.debtor)?.name} is
-              owed by{" "}
-              {users.find((user) => user.id === transaction.creditor)?.name}:{" "}
-              {transaction.amount.toFixed(2)}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
+  if (transactions.length > 0)
+    return (
+      <div>
+        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+          Summary
+        </h4>
+        <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+          {transactions.map((transaction, i) => {
+            return (
+              <li key={i}>
+                {users.find((user) => user.id === transaction.debtor)?.name} is
+                owed by{" "}
+                {users.find((user) => user.id === transaction.creditor)?.name}:{" "}
+                {transaction.amount.toFixed(2)}€
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
 };
 
 export default ExpenseSplitter;

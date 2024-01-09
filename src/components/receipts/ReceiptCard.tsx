@@ -1,3 +1,4 @@
+"use client";
 import React, { Suspense } from "react";
 import type { ReceiptWithItemsUser, User } from "~/server/db/schema";
 import {
@@ -12,7 +13,7 @@ import { Skeleton } from "../ui/skeleton";
 import CalculateOwes from "./ReceiptUserExpenses";
 import ReceiptPaidBySelect from "./ReceiptPaidBySelect";
 
-const ReceiptCard = async ({
+const ReceiptCard = ({
   receipt,
   children,
   users,

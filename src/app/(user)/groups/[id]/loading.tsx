@@ -45,9 +45,7 @@ const loading = () => {
             {new Array(3).fill(0).map((_, i) => (
               <div className="flex flex-row items-center" key={i}>
                 <div className="flex flex-col items-center">
-                  <Skeleton className="h-8 w-8 rounded-full" />
-                  <Skeleton className="h-8 w-8 rounded-full" />
-                  <Skeleton className="h-8 w-8 rounded-full" />
+                  <Skeleton className="h-12 w-12 rounded-full" />
                 </div>
               </div>
             ))}
