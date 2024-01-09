@@ -12,7 +12,7 @@ import Image from "next/image";
 
 import fallbackUserImage from "~/assets/fallback-user-image.webp";
 import type { ReceiptWithItemsUser, User } from "~/server/db/schema";
-import { updateUserThatPaid } from "~/app/receipts/[id]/action";
+import { updateUserThatPaid } from "~/app/(user)/receipts/[id]/action";
 const ReceiptPaidBySelect = ({
   receipt,
   users,
