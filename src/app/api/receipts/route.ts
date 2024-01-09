@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
   if (receipt) {
     const message = { created: true, id: receipt.id };
     const channel = `receipt-${receipt.id}`;
-    revalidatePath(`/groups/[id]`);
+    revalidatePath(`/(user)/groups/[id]`);
 
     await redisPub.publish(channel, JSON.stringify(message));
   }
