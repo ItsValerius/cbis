@@ -7,7 +7,7 @@ import {
 } from "../providers/EventSourceProvider";
 import { syncSchema } from "~/server/schema/syncSchema";
 import { ToastAction } from "~/components/ui/toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
 
 const ReceiptToast = () => {
@@ -16,7 +16,7 @@ const ReceiptToast = () => {
   const stringSchema = z.string();
   const eventSource = useContext(EventSourceContext);
   const searchParams = useSearchParams();
-
+  const pathname = usePathname();
   const id = searchParams.get("id");
   const updateToastText = useCallback(
     (event: MessageEvent) => {
@@ -39,6 +39,7 @@ const ReceiptToast = () => {
               <ToastAction
                 altText="Refresh"
                 onClick={() => {
+                  router.push(pathname);
                   return router.refresh();
                 }}
               >
