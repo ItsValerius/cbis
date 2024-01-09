@@ -12,7 +12,6 @@ import { Skeleton } from "../ui/skeleton";
 import CalculateOwes from "./ReceiptUserExpenses";
 import ReceiptPaidBySelect from "./ReceiptPaidBySelect";
 
-
 const ReceiptCard = async ({
   receipt,
   children,
@@ -25,7 +24,7 @@ const ReceiptCard = async ({
   users: User[];
 }) => {
   return (
-    <Card className="flex w-[480px] max-w-full flex-col transition-shadow duration-500 hover:shadow-xl xl:w-full">
+    <Card className="flex  w-full max-w-full flex-col transition-shadow duration-500 hover:shadow-xl">
       <CardHeader>
         {breadcrumb}
         <CardTitle>Receipt ID: {receipt.id}</CardTitle>
