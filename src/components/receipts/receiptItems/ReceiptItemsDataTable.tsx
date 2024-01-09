@@ -20,8 +20,9 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import type { NewReceiptItem, User } from "~/server/db/schema";
-import { Button } from "../ui/button";
+import { Button } from "~/components/ui/button";
 import { updateReceiptsItems } from "~/app/(user)/receipts/[id]/action";
+
 import { Plus } from "lucide-react";
 
 interface DataTableProps<ReceiptItem> {
@@ -181,7 +182,7 @@ export function ReceiptItemsDataTable({
                 .map((row) => row.id)
                 .filter((r): r is number => !!r);
 
-              await updateReceiptsItems(updateItems, selectedRowIds);
+              await updateReceiptsItems(updateItems, selectedRowIds, receiptId);
               setTableData((old) =>
                 old.map((row) => {
                   if (updateItems.includes(row)) {

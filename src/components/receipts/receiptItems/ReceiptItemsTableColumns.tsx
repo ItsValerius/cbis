@@ -1,10 +1,10 @@
 "use client";
 import type { ColumnDef } from "@tanstack/react-table";
 import type { NewReceiptItem } from "~/server/db/schema";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { Trash, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
@@ -18,7 +18,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
-} from "../ui/select";
+} from "../../ui/select";
 // Give our default column cell renderer editing superpowers!
 export const defaultColumn: Partial<ColumnDef<NewReceiptItem>> = {
   cell: ({ getValue, row: { index }, column: { id }, table }) => {

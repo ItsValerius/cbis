@@ -34,7 +34,7 @@ export type ReceiptWithItems = typeof receipts.$inferSelect & {
 };
 export type ReceiptWithItemsUser = typeof receipts.$inferSelect & {
   receiptItems: ReceiptItem[];
-  createdBy: User;
+  paidBy: User;
 };
 export type ReceiptItem = typeof receiptItems.$inferSelect;
 
@@ -67,7 +67,7 @@ export const receipts = pgTable("receipt", {
 
 export const receiptRelation = relations(receipts, ({ many, one }) => ({
   receiptItems: many(receiptItems),
-  createdBy: one(users, {
+  paidBy: one(users, {
     fields: [receipts.userId],
     references: [users.id],
   }),
