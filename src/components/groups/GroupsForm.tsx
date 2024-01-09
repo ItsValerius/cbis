@@ -7,7 +7,7 @@ import { useToast } from "../ui/use-toast";
 import { Label } from "../ui/label";
 import { useRouter } from "next/navigation";
 import GroupsButton from "./GroupsButton";
-import { createGroupAction } from "~/app/groups/_actions/create-group.action";
+import { createGroupAction } from "~/app/(user)/groups/_actions/create-group.action";
 
 const GroupsForm = () => {
   const { toast } = useToast();

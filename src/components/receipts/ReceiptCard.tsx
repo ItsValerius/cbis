@@ -17,14 +17,17 @@ const ReceiptCard = async ({
   receipt,
   children,
   users,
+  breadcrumb,
 }: {
   receipt: ReceiptWithItemsUser;
   children?: React.JSX.Element;
+  breadcrumb?: React.JSX.Element;
   users: User[];
 }) => {
   return (
     <Card className="flex w-[480px] max-w-full flex-col transition-shadow duration-500 hover:shadow-xl xl:w-full">
       <CardHeader>
+        {breadcrumb}
         <CardTitle>Receipt ID: {receipt.id}</CardTitle>
       </CardHeader>
       {receipt.updated ? (

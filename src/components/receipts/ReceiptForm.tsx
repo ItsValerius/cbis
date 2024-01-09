@@ -1,12 +1,15 @@
 "use client";
-import { Label } from "@radix-ui/react-label";
 import React, { useCallback } from "react";
 import { Input } from "../ui/input";
 import ReceiptButton from "./ReceiptButton";
-import { postReceipt } from "~/app/receipts/action";
+import { postReceipt } from "~/app/(user)/receipts/action";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const ReceiptForm = (props: { groupId: number }) => {
+const ReceiptForm = (props: {
+  groupId: number;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { groupId, setOpen } = props;
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -23,16 +26,17 @@ const ReceiptForm = (props: { groupId: number }) => {
   return (
     <form
       action={async (formData) => {
-        formData.append("groupId", String(props.groupId));
+        formData.append("groupId", String(groupId));
         const receipt = await postReceipt(formData);
-        if (receipt)
+        if (receipt) {
           router.push(
             pathname + "?" + createQueryString("id", String(receipt.id)),
           );
+          setOpen(false);
+        }
       }}
       className="flex flex-col items-center gap-2"
     >
-      <Label htmlFor="file_input">Upload Receipt</Label>
       <Input
         id="file_input"
         type="file"
