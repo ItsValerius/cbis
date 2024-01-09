@@ -55,13 +55,16 @@ export async function GET(
     };
     event: "update";
   }) => {
+    console.log(message.data);
+
     syncSchema.parse(message.data);
     if (abort) {
-      throw new Error("Abort!");
+      throw new Error("Closed");
     }
   };
 
   const syncStatusStream = async (notifier: SyncEvents) => {
+    if (abort) return;
     // Begin the stream
     notifier.update(
       {
@@ -79,7 +82,8 @@ export async function GET(
 
     // send update to stream
     redisSub.on("message", (channel, message) => {
-      getSSEWriter(writer, encoder).update(
+      if (abort) return;
+      notifier.update(
         {
           data: {
             sync_status: "sync_complete",

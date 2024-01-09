@@ -12,8 +12,11 @@ import { db } from "~/server/db";
 import { receipts, type NewReceiptItem } from "~/server/db/schema";
 
 export const deleteReceipt = async (id: number) => {
-  await db.delete(receipts).where(eq(receipts.id, id));
-  redirect("/receipts/list");
+  const deletedReceipt = await db
+    .delete(receipts)
+    .where(eq(receipts.id, id))
+    .returning();
+  redirect("/groups/" + deletedReceipt.at(0)?.groupId);
 };
 
 export const updateReceiptsItems = async (

@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import type { ReceiptWithItemsUser, User } from "~/server/db/schema";
-
 import {
   Card,
   CardContent,
@@ -8,22 +7,21 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-
 import ReceiptItemsAccordion from "./receiptItems/ReceiptItemsAccordion";
 import { Skeleton } from "../ui/skeleton";
-import { getGroupUsers } from "~/lib/helper";
 import CalculateOwes from "./ReceiptUserExpenses";
 import ReceiptPaidBySelect from "./ReceiptPaidBySelect";
+
 
 const ReceiptCard = async ({
   receipt,
   children,
+  users,
 }: {
   receipt: ReceiptWithItemsUser;
   children?: React.JSX.Element;
+  users: User[];
 }) => {
-  const groupAndUsers = await getGroupUsers(receipt.groupId);
-  const users: User[] = groupAndUsers.map((group) => group.user);
   return (
     <Card className="flex w-[480px] max-w-full flex-col transition-shadow duration-500 hover:shadow-xl xl:w-full">
       <CardHeader>

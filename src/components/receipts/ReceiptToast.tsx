@@ -1,46 +1,63 @@
 "use client";
-import { useCallback, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { useToast } from "~/components/ui/use-toast";
-import { useID } from "../providers/EventSourceProvider";
+import {
+  EventSourceContext,
+  EventSourceProvider,
+} from "../providers/EventSourceProvider";
 import { syncSchema } from "~/server/schema/syncSchema";
 import { ToastAction } from "~/components/ui/toast";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { z } from "zod";
 
-export const ReceiptToast = () => {
+const ReceiptToast = () => {
   const { toast } = useToast();
   const router = useRouter();
   const stringSchema = z.string();
-  const { eventSource } = useID();
-  const updateToastText = useCallback((event: MessageEvent) => {
-    const parsedEventData = stringSchema.safeParse(event.data);
-    if (!parsedEventData.success) return;
-    const parsed = syncSchema.safeParse(JSON.parse(parsedEventData.data));
-    if (parsed.success) {
-      if (parsed.data.sync_status === "begin_stream") {
-        toast({
-          title: parsed.data.sync_message,
-          description: parsed.data.sync_date,
-        });
-      }
-      console.log(parsed.data.sync_status);
+  const eventSource = useContext(EventSourceContext);
+  const searchParams = useSearchParams();
 
-      if (parsed.data.sync_status === "sync_complete") {
-        toast({
-          title: parsed.data.sync_message,
-          description: parsed.data.sync_date,
-          action: (
-            <ToastAction altText="Refresh" onClick={() => router.refresh()}>
-              Refresh to see the changes
-            </ToastAction>
-          ),
-        });
-        console.log("sync_complete");
+  const pathname = usePathname();
 
-        eventSource?.close();
+  const id = searchParams.get("id");
+  const updateToastText = useCallback(
+    (event: MessageEvent) => {
+      const parsedEventData = stringSchema.safeParse(event.data);
+      if (!parsedEventData.success) return;
+      const parsed = syncSchema.safeParse(JSON.parse(parsedEventData.data));
+      if (parsed.success) {
+        if (parsed.data.sync_status === "begin_stream") {
+          toast({
+            title: parsed.data.sync_message,
+            description: parsed.data.sync_date,
+          });
+        }
+
+        if (parsed.data.sync_status === "sync_complete" && id) {
+          toast({
+            title: parsed.data.sync_message,
+            description: parsed.data.sync_date,
+            action: (
+              <ToastAction
+                altText="Refresh"
+                onClick={() => {
+                  if (pathname.includes(id)) return router.refresh();
+                  router.push("/receipts/" + id);
+                }}
+              >
+                {pathname.includes(id)
+                  ? "Refresh to see the changes"
+                  : "Go To Receipt Page"}
+              </ToastAction>
+            ),
+          });
+
+          eventSource?.close();
+        }
       }
-    }
-  }, []);
+    },
+    [id],
+  );
 
   useEffect(() => {
     if (eventSource) {
@@ -57,4 +74,12 @@ export const ReceiptToast = () => {
   return <></>;
 };
 
-export default ReceiptToast;
+const ReceiptToastWrapped = () => (
+  <EventSourceProvider>
+    <ReceiptToast />
+  </EventSourceProvider>
+);
+
+export { ReceiptToastWrapped };
+
+// export default ReceiptToast;

@@ -1,19 +1,34 @@
 "use client";
 import { Label } from "@radix-ui/react-label";
-import React from "react";
+import React, { useCallback } from "react";
 import { Input } from "../ui/input";
 import ReceiptButton from "./ReceiptButton";
-import { useID } from "../providers/EventSourceProvider";
 import { postReceipt } from "~/app/receipts/action";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const ReceiptForm = (props: { groupId: number }) => {
-  const { setId } = useID();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams],
+  );
+
   return (
     <form
       action={async (formData) => {
         formData.append("groupId", String(props.groupId));
         const receipt = await postReceipt(formData);
-        if (receipt) setId(receipt.id);
+        if (receipt)
+          router.push(
+            pathname + "?" + createQueryString("id", String(receipt.id)),
+          );
       }}
       className="flex flex-col items-center gap-2"
     >

@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import {
   Card,
   CardContent,
@@ -6,13 +5,12 @@ import {
   CardFooter,
   CardHeader,
 } from "~/components/ui/card";
-import { db } from "~/server/db";
-import { groups } from "~/server/db/schema";
+
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
 import MemberAvatar from "~/components/groups/dashboard/MemberAvatar";
 import ReceiptCard from "~/components/receipts/ReceiptCard";
-import { getReceiptsByGroup } from "~/lib/helper";
+import { getGroupUsersByGroupId, getReceiptsByGroup } from "~/lib/helper";
 import ReceiptForm from "~/components/receipts/ReceiptForm";
 import { ChevronRight } from "lucide-react";
 import CopyInviteId from "~/components/groups/CopyInviteId";
@@ -22,6 +20,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { getServerSession } from "next-auth";
+import { authOptions } from "~/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function GroupIdPage({
   params,
@@ -29,20 +30,17 @@ export default async function GroupIdPage({
   params: { id: number };
 }) {
   const groupId = params.id;
+  const session = await getServerSession(authOptions);
 
-  const groupUsers = await db.query.groups.findFirst({
-    where: eq(groups.id, groupId),
-    with: {
-      users: {
-        with: {
-          user: true,
-        },
+  const groupUsers = await getGroupUsersByGroupId(groupId);
+  if (
+    !session?.user ||
+    !groupUsers ||
+    !groupUsers.users.some(({ user }) => user.id === session?.user.id)
+  )
+    return redirect("/dashboard");
 
-        columns: {},
-      },
-    },
-  });
-
+  const users = groupUsers?.users.map((user) => user?.user);
   const receipts = await getReceiptsByGroup(groupId);
 
   return (
@@ -77,7 +75,7 @@ export default async function GroupIdPage({
         </CardContent>
         <CardContent className="flex w-full flex-col gap-2 pt-4 md:grid md:grid-cols-3 md:gap-4">
           {receipts.map((receipt) => (
-            <ReceiptCard receipt={receipt} key={receipt.id}>
+            <ReceiptCard receipt={receipt} users={users} key={receipt.id}>
               <div className="flex w-full justify-between">
                 <Button variant="secondary" asChild>
                   <Link href={`/receipts/${receipt.id}`}>
