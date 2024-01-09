@@ -39,7 +39,7 @@ const ReceiptToast = () => {
               <ToastAction
                 altText="Refresh"
                 onClick={() => {
-                  router.push(pathname);
+                  router.replace(pathname);
                   return router.refresh();
                 }}
               >
