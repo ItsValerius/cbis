@@ -6,22 +6,34 @@ import {
   CardHeader,
 } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
-import CreateGroupButton from "~/components/groups/dashboard/CreateGroupButton";
 import { Button } from "~/components/ui/button";
+import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+} from "~/components/ui/breadcrumb";
 const loading = () => {
   return (
     <main className="mx-auto w-full max-w-7xl">
       <Card>
         <CardHeader className="flex w-full flex-row justify-between">
-          <h1 className="text-4xl">
-            Hallo <Skeleton className=" inline-block h-6 w-40 align-baseline" />
-          </h1>
+          <div>
+            <Breadcrumb>
+              <BreadcrumbItem isCurrentPage>
+                <BreadcrumbLink as={Link} href="/dashboard">
+                  Dashboard
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+            <h1 className="text-4xl">
+              Hallo{" "}
+              <Skeleton className=" inline-block h-6 w-40 align-baseline" />
+            </h1>
+          </div>
 
           <Skeleton className="h-12 w-12 rounded-full" />
         </CardHeader>
-        <CardContent>
-          <CreateGroupButton />
-        </CardContent>
       </Card>
       <div className="flex flex-col pt-4 md:grid md:grid-cols-3 md:gap-4">
         {new Array(3).fill(0).map((_, i) => {

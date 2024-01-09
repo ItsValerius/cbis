@@ -11,7 +11,6 @@ import { Button } from "~/components/ui/button";
 import MemberAvatar from "~/components/groups/dashboard/MemberAvatar";
 import ReceiptCard from "~/components/receipts/ReceiptCard";
 import { getGroupUsersByGroupId, getReceiptsByGroup } from "~/lib/helper";
-import ReceiptForm from "~/components/receipts/ReceiptForm";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import CopyInviteId from "~/components/groups/CopyInviteId";
 import {
@@ -23,7 +22,6 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/lib/auth";
 import { redirect } from "next/navigation";
-import { Separator } from "~/components/ui/separator";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -56,11 +54,15 @@ export default async function GroupIdPage({
         <CardHeader>
           <Breadcrumb>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+              <BreadcrumbLink as={Link} href="/dashboard">
+                Dashboard
+              </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem isCurrentPage>
-              <BreadcrumbLink href={`/groups/${groupId}`}>Group</BreadcrumbLink>
+              <BreadcrumbLink as={Link} href={`/groups/${groupId}`}>
+                Group
+              </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
           <h2 className="text-3xl">{groupUsers?.name}</h2>

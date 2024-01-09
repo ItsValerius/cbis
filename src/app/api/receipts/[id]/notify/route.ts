@@ -5,7 +5,6 @@ import { getSSEWriter } from "ts-sse";
 import type { EventNotifier } from "ts-sse";
 import { redisSub } from "~/server/db/redis";
 import { syncSchema } from "~/server/schema/syncSchema";
-import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 

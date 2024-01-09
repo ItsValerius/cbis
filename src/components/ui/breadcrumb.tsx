@@ -78,10 +78,19 @@ export const BreadcrumbItem = React.forwardRef<
         return React.cloneElement(child, { isCurrentPage });
       }
 
-      if (child.type === BreadcrumbSeparator) {
-        return React.cloneElement(child, {
-          children: separator || child.props.children,
-        });
+      if (
+        (child as React.ReactElement<BreadcrumbSeparatorProps>).type ===
+        BreadcrumbSeparator
+      ) {
+        return React.cloneElement(
+          child as React.ReactElement<BreadcrumbSeparatorProps>,
+          {
+            children:
+              separator ??
+              (child as React.ReactElement<BreadcrumbSeparatorProps>).props
+                .children,
+          },
+        );
       }
 
       return child;
@@ -113,7 +122,7 @@ export const BreadcrumbLink = React.forwardRef<
   HTMLAnchorElement,
   BreadcrumbLinkProps
 >(({ className, as: asComp, isCurrentPage, ...props }, forwardedRef) => {
-  const Comp = (isCurrentPage ? "span" : asComp || "a") as "a";
+  const Comp = (isCurrentPage ? "span" : asComp ?? "a") as "a";
 
   return (
     <Comp
