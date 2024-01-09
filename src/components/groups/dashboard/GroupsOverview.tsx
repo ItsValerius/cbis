@@ -7,8 +7,8 @@ const GroupsOverview = async (params: { userId: string }) => {
 
   return (
     <div className="flex flex-col gap-2 pt-4 md:grid md:grid-cols-3 md:gap-4">
-      <GroupCards groups={groups} />
       <GroupCardEmpty />
+      <GroupCards groups={groups} />
     </div>
   );
 };
